@@ -1,0 +1,65 @@
+[
+  {
+    "doorIndex": 0,
+    "hoverDuration": 354.6000000014901,
+    "hingeRotation": -0.261799,
+    "doorLiftDistance": 0,
+    "clickResponseTime": 1,
+    "roomOpenDuration": 1060.3999999985099,
+    "roomCloseDuration": 1054.4000000059605
+  },
+  {
+    "doorIndex": 1,
+    "hoverDuration": 353.90000000596046,
+    "hingeRotation": 0.261799,
+    "doorLiftDistance": 0,
+    "clickResponseTime": 1,
+    "roomOpenDuration": 1062.5,
+    "roomCloseDuration": 1054.2999999970198
+  },
+  {
+    "doorIndex": 2,
+    "hoverDuration": 357,
+    "hingeRotation": -0.261799,
+    "doorLiftDistance": 0,
+    "clickResponseTime": 1,
+    "roomOpenDuration": 1055.3999999985099,
+    "roomCloseDuration": 1057
+  },
+  {
+    "doorIndex": 3,
+    "hoverDuration": 357.59999999403954,
+    "hingeRotation": 0.261799,
+    "doorLiftDistance": 0,
+    "clickResponseTime": 1,
+    "roomOpenDuration": 1052.2000000029802,
+    "roomCloseDuration": 1062.7000000029802
+  },
+  {
+    "doorIndex": 4,
+    "hoverDuration": 364.29999999701977,
+    "hingeRotation": -0.261799,
+    "doorLiftDistance": 0,
+    "clickResponseTime": 1,
+    "roomOpenDuration": 1053.7000000029802,
+    "roomCloseDuration": 1054.2999999970198
+  },
+  {
+    "doorIndex": 5,
+    "hoverDuration": 359.70000000298023,
+    "hingeRotation": 0.261799,
+    "doorLiftDistance": 0,
+    "clickResponseTime": 1,
+    "roomOpenDuration": 1060.5,
+    "roomCloseDuration": 1056.7000000029802
+  },
+  {
+    "doorIndex": 6,
+    "hoverDuration": 352.20000000298023,
+    "hingeRotation": -0.261799,
+    "doorLiftDistance": 0,
+    "clickResponseTime": 1,
+    "roomOpenDuration": 1056.2999999970198,
+    "roomCloseDuration": 1055.5
+  }
+]

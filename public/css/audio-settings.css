@@ -1,0 +1,117 @@
+/* audio-settings.css */
+.audio-settings {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 250px;
+  background-color: #fafafa;
+  /* Sketchy hatching background overlay */
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(0, 0, 0, 0.02) 10px,
+    rgba(0, 0, 0, 0.02) 11px
+  ), repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 10px,
+    rgba(0, 0, 0, 0.02) 10px,
+    rgba(0, 0, 0, 0.02) 11px
+  );
+  border: 2px solid #111;
+  border-radius: 2px 5px 3px 4px;
+  /* Torn paper edge at the bottom */
+  clip-path: polygon(
+    0% 0%, 100% 0%, 
+    100% 95%, 98% 100%, 96% 96%, 94% 100%, 92% 95%, 90% 100%, 
+    88% 96%, 86% 100%, 84% 95%, 82% 100%, 80% 96%, 78% 100%, 
+    76% 95%, 74% 100%, 72% 96%, 70% 100%, 68% 95%, 66% 100%, 
+    64% 96%, 62% 100%, 60% 95%, 58% 100%, 56% 96%, 54% 100%, 
+    52% 95%, 50% 100%, 48% 96%, 46% 100%, 44% 95%, 42% 100%, 
+    40% 96%, 38% 100%, 36% 95%, 34% 100%, 32% 96%, 30% 100%, 
+    28% 95%, 26% 100%, 24% 96%, 22% 100%, 20% 95%, 18% 100%, 
+    16% 96%, 14% 100%, 12% 95%, 10% 100%, 8% 96%, 6% 100%, 
+    4% 95%, 2% 100%, 0% 95%
+  );
+  padding: 15px 15px 25px 15px;
+  font-family: var(--font-primary), monospace;
+  color: #111;
+  z-index: 100;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.audio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed #111;
+  padding-bottom: 10px;
+}
+
+.audio-header h3 {
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.audio-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #555;
+}
+
+.audio-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.audio-slider-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.audio-slider-group label {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.audio-value {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Custom sketch slider */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background: #111;
+  cursor: pointer;
+  margin-top: -6px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+  background: #111;
+}

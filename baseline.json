@@ -1,0 +1,21 @@
+{
+  "lighthouse": {
+    "performance": 28,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 100,
+    "fcp_ms": 5207,
+    "lcp_ms": 8989,
+    "tbt_ms": 5535,
+    "cls": 0,
+    "tti_ms": 16562
+  },
+  "bundle": {
+    "total_js_kb": 1623.3,
+    "three_js_chunk_kb": 936.6
+  },
+  "textures": {
+    "total_kb": 4555,
+    "format": "png"
+  }
+}

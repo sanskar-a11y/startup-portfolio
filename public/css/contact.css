@@ -1,0 +1,309 @@
+/* ============================================================================
+   CONTACT SECTION
+   ============================================================================
+   The contact section presents a centred torn-paper card containing:
+   - A hand-written intro line (Caveat)
+   - A styled contact form (inputs, textarea, submit)
+   - Social media icon links
+   - A footer note
+   
+   All form controls use the "wobbly" hand-drawn border-radius to maintain
+   the sketch aesthetic.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   1. SECTION WRAPPER
+   --------------------------------------------------------------------------- */
+
+.contact-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 6rem 2rem;
+  z-index: var(--z-base);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background removed to reveal WebGL canvas underneath */
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   2. CONTAINER
+   --------------------------------------------------------------------------- */
+
+.contact__container {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------------------------
+   3. SECTION HEADER
+   --------------------------------------------------------------------------- */
+
+.contact__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.contact__header h2,
+.contact__title {
+  font-family: var(--font-sketch);
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-text);
+  margin: 0;
+  display: inline-block;
+  position: relative;
+}
+
+/* Dashed underline */
+.contact__header h2::after,
+.contact__title::after {
+  content: '';
+  display: block;
+  width: 60%;
+  margin: 0.75rem auto 0;
+  border-bottom: var(--border-dashed);
+}
+
+/* ---------------------------------------------------------------------------
+   4. CONTACT CARD — Torn-Paper
+   --------------------------------------------------------------------------- */
+
+.contact__card {
+  position: relative;
+  padding: 2.5rem;
+
+  /* Paper look */
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  background-image: var(--texture-paper);
+  background-repeat: repeat;
+  background-size: 300px 300px;
+
+  /* Pencil-shadow */
+  box-shadow: var(--shadow-drop);
+
+  /* Torn-paper clip-path — consistent with gallery & about cards */
+  clip-path: var(--clip-torn-paper);
+}
+
+/* ---------------------------------------------------------------------------
+   5. INTRO TEXT
+   --------------------------------------------------------------------------- */
+
+.contact__intro {
+  font-family: var(--font-handwriting);
+  font-size: 1.3rem;
+  color: var(--color-muted);
+  text-align: center;
+  line-height: 1.5;
+  margin: 0 0 2rem;
+}
+
+/* ---------------------------------------------------------------------------
+   6. CONTACT FORM LAYOUT
+   --------------------------------------------------------------------------- */
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Individual form group — label + input/textarea */
+.contact__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   7. FORM LABELS
+   --------------------------------------------------------------------------- */
+
+.contact__label {
+  font-family: var(--font-hand);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-text);
+}
+
+/* ---------------------------------------------------------------------------
+   8. FORM INPUTS & TEXTAREA
+   --------------------------------------------------------------------------- */
+
+/* Shared styles for text inputs and textarea */
+.contact__input,
+.contact__textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  line-height: 1.5;
+
+  background: transparent;
+  border: 2px solid var(--color-border);
+
+  /* Wobbly hand-drawn border-radius */
+  border-radius: var(--border-wobbly);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Focus state — darkens the border, stronger outline for contrast */
+.contact__input:focus,
+.contact__textarea:focus {
+  border-color: var(--color-text);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.3);
+}
+
+/* Placeholder */
+.contact__input::placeholder,
+.contact__textarea::placeholder {
+  color: var(--color-border);
+  font-family: var(--font-body);
+}
+
+/* Textarea specific */
+.contact__textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* ---------------------------------------------------------------------------
+   9. SUBMIT BUTTON
+   --------------------------------------------------------------------------- */
+
+/* studio-action-button pattern — full-width, sketch aesthetic */
+.contact__submit {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 0;
+  margin-top: 0.5rem;
+
+  font-family: var(--font-sketch);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  color: var(--color-text);
+
+  border: 2px solid var(--color-text);
+  background: transparent;
+  cursor: pointer;
+
+  /* Wobbly hand-drawn border-radius */
+  border-radius: var(--border-wobbly);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.contact__submit:hover {
+  background-color: var(--color-text);
+  color: var(--color-card);
+  transform: translateY(-2px);
+}
+
+.contact__submit:active {
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------------------
+   10. SOCIAL LINKS
+   --------------------------------------------------------------------------- */
+
+.contact__socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Individual social icon — circular button with hand-drawn radius */
+.contact__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  height: 50px;
+
+  border: 2px solid var(--color-text);
+  background: transparent;
+  text-decoration: none;
+  color: var(--color-text);
+
+  /* Wobbly hand-drawn border-radius (circle-ish) */
+  border-radius: 255px 2px 225px 3px / 3px 255px 5px 225px;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.contact__social-link:hover {
+  background-color: var(--color-text);
+  color: var(--color-card);
+  transform: translateY(-3px);
+}
+
+.contact__social-link:active {
+  transform: translateY(0);
+}
+
+/* SVG icon sizing */
+.contact__social-link svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* Ensure SVG paths inherit colour for hover inversion */
+.contact__social-link svg path {
+  fill: currentColor;
+}
+
+/* ---------------------------------------------------------------------------
+   11. FOOTER NOTE
+   --------------------------------------------------------------------------- */
+
+.contact__footer {
+  font-family: var(--font-handwriting);
+  font-size: 1rem;
+  color: var(--color-muted);
+  text-align: center;
+  margin-top: 2rem;
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------------------
+   12. REDUCED MOTION
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .contact__input,
+  .contact__textarea,
+  .contact__submit,
+  .contact__social-link {
+    transition: none;
+  }
+}

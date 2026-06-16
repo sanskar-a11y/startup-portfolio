@@ -1,0 +1,391 @@
+/* ==========================================================================
+   RESET.CSS — Modern CSS Reset
+   ==========================================================================
+   A production-grade reset tailored for the hand-drawn portfolio.
+   Goes beyond traditional resets to include:
+     • Full-viewport app shell (.app)
+     • Hidden scrollbars (content still scrollable)
+     • Accessibility screen-reader utilities
+     • Sensible defaults for images, links, and buttons
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   § 1  UNIVERSAL BOX-SIZING
+   --------------------------------------------------------------------------
+   border-box everywhere so padding/border never blow out widths.
+   The inheritance pattern lets individual components opt out if needed.
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 2  MARGIN & PADDING RESET
+   --------------------------------------------------------------------------
+   Strip browser defaults from every element.  We'll add spacing back
+   intentionally via our design tokens.
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 3  HTML ROOT
+   --------------------------------------------------------------------------
+   • Desktop base = 16px (overridden to 14px on mobile via variables.css).
+   • Smooth scroll for anchor navigation.
+   • -webkit-text-size-adjust prevents iOS from inflating text on rotate.
+   -------------------------------------------------------------------------- */
+
+html {
+  font-size: var(--font-size-base, 16px);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Prevent overscroll bounce on iOS / Chrome */
+  overscroll-behavior: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 4  BODY
+   --------------------------------------------------------------------------
+   Sets the global typographic baseline and the warm paper-white background.
+   overflow: hidden keeps the body from scrolling — all scrolling is
+   delegated to .app or inner scroll containers.
+   -------------------------------------------------------------------------- */
+
+body {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 1rem;
+  line-height: var(--leading-normal, 1.5);
+  color: var(--color-text, #1a1a1a);
+  background-color: var(--color-bg, #fafafa);
+  overflow-x: hidden;
+
+  /* Smooth font rendering for the hand-drawn aesthetic */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  /* Prevent text selection flash on tap (mobile) */
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 5  SCROLLBAR HIDING
+   --------------------------------------------------------------------------
+   Content remains scrollable; scrollbar chrome is simply invisible.
+   Three declarations cover all major engines.
+   -------------------------------------------------------------------------- */
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* WebKit / Blink (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* IE / legacy Edge (just in case) */
+body {
+  -ms-overflow-style: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 6  APP SHELL
+   --------------------------------------------------------------------------
+   The .app div is the outermost layout wrapper.  It spans the full
+   viewport and clips its children so we can manage scrolling in
+   dedicated scroll areas (panels, pages).
+   -------------------------------------------------------------------------- */
+
+.app {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#webgl-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 7  HEADINGS
+   --------------------------------------------------------------------------
+   Strip default browser font-size / weight so we style headings
+   intentionally via component classes.
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: var(--leading-tight, 1.2);
+}
+
+
+/* --------------------------------------------------------------------------
+   § 8  LINKS
+   --------------------------------------------------------------------------
+   Inherit color and strip underline globally.  Interactive states
+   are added per-component.
+   -------------------------------------------------------------------------- */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible {
+  outline: 2px dashed var(--color-accent, #e74c3c);
+  outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 9  BUTTONS
+   --------------------------------------------------------------------------
+   Full reset so every <button> starts from zero — no browser chrome,
+   no default padding, inherits font.
+   -------------------------------------------------------------------------- */
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button:focus-visible {
+  outline: 2px dashed var(--color-accent, #e74c3c);
+  outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 10  FORM ELEMENTS
+   --------------------------------------------------------------------------
+   Inherit font from parent so inputs match the rest of the UI.
+   -------------------------------------------------------------------------- */
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px dashed var(--color-accent, #e74c3c);
+  outline-offset: 2px;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 11  LISTS
+   --------------------------------------------------------------------------
+   Remove default bullets / numbers.
+   -------------------------------------------------------------------------- */
+
+ul,
+ol {
+  list-style: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 12  IMAGES & MEDIA
+   --------------------------------------------------------------------------
+   Block display prevents inline baseline gaps.
+   max-width keeps images from overflowing their containers.
+   -------------------------------------------------------------------------- */
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;            /* Maintain aspect ratio */
+  -webkit-user-drag: none; /* Prevent accidental drag on desktop */
+  user-select: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 13  TABLES
+   --------------------------------------------------------------------------
+   Collapse borders for a cleaner default.
+   -------------------------------------------------------------------------- */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 14  ACCESSIBILITY — Screen Reader Only
+   --------------------------------------------------------------------------
+   .sr-only  hides an element visually but keeps it accessible to screen
+             readers and assistive technology.
+
+   .sr-only-seo  same behaviour — a semantic alias used when the hidden
+                 content is primarily for SEO (e.g., JSON-LD companions).
+   -------------------------------------------------------------------------- */
+
+.sr-only,
+.sr-only-seo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   § 15  ACCESSIBILITY — Focusable Skip Link
+   --------------------------------------------------------------------------
+   .sr-focusable  is visually hidden until it receives keyboard focus,
+   then it pops into view as a fixed-position bar at the top of the screen.
+   Perfect for "Skip to main content" links.
+   -------------------------------------------------------------------------- */
+
+.sr-focusable {
+  /* Hidden by default (same as .sr-only) */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-focusable:focus,
+.sr-focusable:active {
+  /* Reveal on focus */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: auto;
+  height: auto;
+  padding: var(--space-3, 0.75rem) var(--space-6, 1.5rem);
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+
+  /* Dark background so it's unmissable */
+  background-color: var(--color-text, #1a1a1a);
+  color: var(--color-bg, #fafafa);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: var(--font-size-md, 1rem);
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: var(--shadow-drop, 0 4px 15px rgba(0, 0, 0, 0.15));
+}
+
+
+/* --------------------------------------------------------------------------
+   § 16  REDUCED MOTION
+   --------------------------------------------------------------------------
+   Respect user preference.  When prefers-reduced-motion is set, strip
+   all transitions and animations globally.  Individual components can
+   provide static fallbacks as needed.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   § 17  SELECTION STYLING
+   --------------------------------------------------------------------------
+   Branded text selection that fits the paper palette.
+   -------------------------------------------------------------------------- */
+
+::selection {
+  background-color: rgba(231, 76, 60, 0.2);  /* Accent tint */
+  color: var(--color-text, #1a1a1a);
+}
+
+::-moz-selection {
+  background-color: rgba(231, 76, 60, 0.2);
+  color: var(--color-text, #1a1a1a);
+}
+
+
+/* --------------------------------------------------------------------------
+   § 18  MOBILE BASE FONT SIZE
+   --------------------------------------------------------------------------
+   Mirrors the token override in variables.css for the rare case
+   reset.css is loaded without variables.css.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}

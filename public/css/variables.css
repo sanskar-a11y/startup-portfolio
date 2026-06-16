@@ -1,0 +1,309 @@
+/* ==========================================================================
+   VARIABLES.CSS — Design Tokens & Font Imports
+   ==========================================================================
+   Central source of truth for the hand-drawn, paper-textured portfolio.
+   Every color, font stack, shadow, clip-path, spacing unit, and timing
+   function lives here so the rest of the codebase stays DRY.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   § 1  GOOGLE FONTS
+   --------------------------------------------------------------------------
+   We pull five typefaces from Google Fonts CDN.  Each serves a distinct
+   role in the hand-drawn aesthetic:
+
+   • Caveat          – primary handwriting (headings, preloader %)
+   • Cabin Sketch    – chalky sketch titles
+   • Gloria Hallelujah – informal annotations / tooltips
+   • Inter           – readable body copy & UI text
+   • Patrick Hand    – casual hand-printed labels
+   -------------------------------------------------------------------------- */
+
+ 
+
+
+/* --------------------------------------------------------------------------
+   § 2  CUSTOM PROPERTIES  (Design Tokens)
+   --------------------------------------------------------------------------
+   Scoped to :root so every element in the document can reference them.
+   Organized into logical groups: palette → typography → effects → layout.
+   -------------------------------------------------------------------------- */
+
+:root {
+
+  /* ·····································································
+     2-A  COLOR PALETTE
+     ····································································· */
+
+  /* Page background — warm off-white, like aged paper */
+  --color-bg:            #fafafa;
+
+  /* Primary text — soft black so it feels pencilled, not printed */
+  --color-text:          #1a1a1a;
+
+  /* Card / panel surfaces */
+  --color-card:          #fff;
+
+  /* Border default — dashed lines between sections */
+  --color-border:        #bbb;
+
+  /* Border light — subtle dividers inside cards */
+  --color-border-light:  #ccc;
+
+  /* Muted caption / secondary text */
+  --color-muted:         #666;
+
+  /* Slightly darker secondary — sub-headings, descriptions */
+  --color-subtle:        #444;
+
+  /* Accent — red pushpin / active-state highlight */
+  --color-accent:        #e74c3c;
+
+  /* Accent hover — slightly darker red for interactive feedback */
+  --color-accent-hover:  #c0392b;
+
+  /* Overlay — used behind modals and popups */
+  --color-overlay:       rgba(0, 0, 0, 0.45);
+
+  /* Success / check-mark green */
+  --color-success:       #27ae60;
+
+  /* Tag / chip background — very light gray */
+  --color-tag-bg:        #f0f0f0;
+
+
+  /* ·····································································
+     2-B  TYPOGRAPHY
+     ····································································· */
+
+  /* Handwriting — primary display / headings */
+  --font-handwriting:    'Caveat', cursive;
+
+  /* Sketch — chalky, double-stroke titles */
+  --font-sketch:         'Cabin Sketch', cursive;
+
+  /* Hallelujah — informal annotations */
+  --font-hallelujah:     'Gloria Hallelujah', cursive;
+
+  /* Body — clean sans-serif for readability */
+  --font-body:           'Inter', sans-serif;
+
+  /* Hand — casual hand-printed labels / nav items */
+  --font-hand:           'Patrick Hand', cursive;
+
+  /* Clean UI — geometric sans for buttons */
+  --font-ui:             'Inter', sans-serif;
+
+  /* Scribble — wobbly decorative text */
+  --font-scribble:       'Caveat', cursive;
+
+  /* Fancy — ornate display headlines */
+  --font-fancy:          'Cabin Sketch', cursive;
+
+  /* Base font size — desktop */
+  --font-size-base:      16px;
+
+  /* Type scale (minor-third ≈ 1.2) */
+  --font-size-xs:        0.75rem;    /* 12px */
+  --font-size-sm:        0.875rem;   /* 14px */
+  --font-size-md:        1rem;       /* 16px */
+  --font-size-lg:        1.25rem;    /* 20px */
+  --font-size-xl:        1.5rem;     /* 24px */
+  --font-size-2xl:       2rem;       /* 32px */
+  --font-size-3xl:       2.5rem;     /* 40px */
+  --font-size-4xl:       3rem;       /* 48px */
+
+  /* Line heights */
+  --leading-tight:       1.2;
+  --leading-normal:      1.5;
+  --leading-relaxed:     1.75;
+
+
+  /* ·····································································
+     2-C  EFFECTS — Shadows, Borders, Clip-Paths
+     ····································································· */
+
+  /* Pencil shadow — faint, offset, hard-edged */
+  --shadow-pencil:       3px 3px 0px rgba(0, 0, 0, 0.08);
+
+  /* Drop shadow — softer, used on elevated cards / modals */
+  --shadow-drop:         0 4px 15px rgba(0, 0, 0, 0.15);
+
+  /* Lifted card hover shadow */
+  --shadow-hover:        0 8px 25px rgba(0, 0, 0, 0.18);
+
+  /* Inset shadow for pressed buttons */
+  --shadow-inset:        inset 2px 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* Wobbly hand-drawn border-radius
+     The asymmetric radii trick creates an organic, imperfect look.
+     Usage:  border-radius: var(--border-wobbly);                          */
+  --border-wobbly:       2px 255px 3px / 255px 5px 225px 3px;
+
+  /* Slightly less extreme wobble for smaller elements */
+  --border-wobbly-sm:    2px 55px 3px / 55px 5px 45px 3px;
+
+  /* Torn-paper clip-path
+     A wavy polygon that makes edges look hand-torn.
+     Apply with:  clip-path: var(--clip-torn-paper);                       */
+  --clip-torn-paper:     polygon(
+    /* Top edge — subtle waves */
+    0% 2%,    3% 0%,    7% 1.5%,   12% 0.5%,
+    18% 2%,   24% 0%,   30% 1%,    36% 0.3%,
+    42% 1.8%, 48% 0.2%, 54% 1.5%,  60% 0%,
+    66% 1.2%, 72% 0.5%, 78% 1.8%,  84% 0%,
+    90% 1%,   95% 0.3%, 100% 1.5%,
+
+    /* Right edge — gentle wobble down */
+    100% 6%,  99% 12%,  100% 18%,  99.5% 24%,
+    100% 30%, 99% 36%,  100% 42%,  99.5% 48%,
+    100% 54%, 99% 60%,  100% 66%,  99.5% 72%,
+    100% 78%, 99% 84%,  100% 90%,  99.5% 95%,
+    100% 98%,
+
+    /* Bottom edge — torn waves */
+    97% 100%, 92% 98.5%, 87% 100%, 82% 99%,
+    77% 100%, 72% 98%,   67% 100%, 62% 99.2%,
+    57% 100%, 52% 98.5%, 47% 100%, 42% 99%,
+    37% 100%, 32% 98.5%, 27% 100%, 22% 99%,
+    17% 100%, 12% 98%,   7% 100%,  2% 99%,
+    0% 100%,
+
+    /* Left edge — wobble back up */
+    0% 95%,   1% 90%,   0% 84%,   0.5% 78%,
+    0% 72%,   1% 66%,   0% 60%,   0.5% 54%,
+    0% 48%,   1% 42%,   0% 36%,   0.5% 30%,
+    0% 24%,   1% 18%,   0% 12%,   0.5% 6%
+  );
+
+  /* Simpler torn edge — top only (for banners / headers) */
+  --clip-torn-top:       polygon(
+    0% 4%,    5% 0%,    10% 3%,   20% 0.5%,
+    30% 2.5%, 40% 0%,   50% 2%,   60% 0.5%,
+    70% 3%,   80% 0%,   90% 2%,   95% 0.5%,
+    100% 3%,  100% 100%, 0% 100%
+  );
+
+  /* Simpler torn edge — bottom only (for footers / section ends) */
+  --clip-torn-bottom:    polygon(
+    0% 0%,    100% 0%,
+    100% 96%, 95% 100%, 90% 97%, 80% 100%,
+    70% 97%,  60% 100%, 50% 98%, 40% 100%,
+    30% 97%,  20% 100%, 10% 98%, 5% 100%,
+    0% 97%
+  );
+
+
+  /* ·····································································
+     2-D  SPACING SCALE  (8-point grid)
+     ····································································· */
+
+  --space-1:   0.25rem;   /*  4px */
+  --space-2:   0.5rem;    /*  8px */
+  --space-3:   0.75rem;   /* 12px */
+  --space-4:   1rem;      /* 16px */
+  --space-5:   1.25rem;   /* 20px */
+  --space-6:   1.5rem;    /* 24px */
+  --space-8:   2rem;      /* 32px */
+  --space-10:  2.5rem;    /* 40px */
+  --space-12:  3rem;      /* 48px */
+  --space-16:  4rem;      /* 64px */
+  --space-20:  5rem;      /* 80px */
+  --space-24:  6rem;      /* 96px */
+
+
+  /* ·····································································
+     2-E  TRANSITIONS & EASINGS
+     ····································································· */
+
+  /* Default transition duration */
+  --duration-fast:       150ms;
+  --duration-normal:     300ms;
+  --duration-slow:       500ms;
+  --duration-slower:     800ms;
+
+  /* Easing curves */
+  --ease-out:            cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-back:       cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out:         cubic-bezier(0.42, 0, 0.58, 1);
+  --ease-bounce:         cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  --ease-spring:         cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Preloader-specific easing */
+  --ease-preloader:      cubic-bezier(0.77, 0, 0.175, 1);
+
+
+  /* ·····································································
+     2-F  Z-INDEX SCALE
+     ····································································· */
+
+  --z-base:        1;
+  --z-dropdown:    100;
+  --z-sticky:      200;
+  --z-overlay:     500;
+  --z-modal:       600;
+  --z-popup:       700;
+  --z-tooltip:     800;
+  --z-preloader:   1000;
+
+
+  /* ·····································································
+     2-G  LAYOUT BREAKPOINTS  (for reference — used in media queries)
+     ····································································· */
+
+  /* These can't be used in media queries directly (CSS limitation),
+     but are documented here for consistency:
+       Mobile:   < 768px
+       Tablet:   768px – 1024px
+       Desktop:  > 1024px
+       Wide:     > 1440px                                                  */
+
+
+  /* ·····································································
+     2-H  MISCELLANEOUS
+     ····································································· */
+
+  /* Maximum content width */
+  --max-width:           1200px;
+
+  /* Card border style — dashed for the sketchy feel */
+  --border-dashed:       2px dashed var(--color-border);
+  --border-dashed-light: 1px dashed var(--color-border-light);
+
+  /* Paper texture path (reusable in backgrounds) */
+  --texture-paper:       url('../textures/paper-texture.webp');
+}
+
+
+/* --------------------------------------------------------------------------
+   § 3  RESPONSIVE TOKEN OVERRIDES
+   --------------------------------------------------------------------------
+   Adjust tokens at smaller viewports so spacing and type stay comfortable
+   on mobile without per-component media queries.
+   -------------------------------------------------------------------------- */
+
+/* Tablet and below */
+@media (max-width: 1024px) {
+  :root {
+    --font-size-3xl: 2rem;
+    --font-size-4xl: 2.5rem;
+    --space-16:      3rem;
+    --space-20:      4rem;
+    --space-24:      5rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 14px;
+    --font-size-2xl:  1.5rem;
+    --font-size-3xl:  1.75rem;
+    --font-size-4xl:  2rem;
+    --space-12:       2rem;
+    --space-16:       2.5rem;
+    --space-20:       3rem;
+    --space-24:       3.5rem;
+  }
+}

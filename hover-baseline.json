@@ -1,0 +1,58 @@
+[
+  {
+    "doorIndex": 0,
+    "hoverEnterTime": 403,
+    "hoverExitTime": 411.8999999985099,
+    "hingeRotation": 0,
+    "doorLiftAmount": 0,
+    "hoverCooldown": 300
+  },
+  {
+    "doorIndex": 1,
+    "hoverEnterTime": 407.8999999985099,
+    "hoverExitTime": 403.40000000596046,
+    "hingeRotation": 0,
+    "doorLiftAmount": 0,
+    "hoverCooldown": 300
+  },
+  {
+    "doorIndex": 2,
+    "hoverEnterTime": 405.69999999552965,
+    "hoverExitTime": 405.1000000014901,
+    "hingeRotation": 0,
+    "doorLiftAmount": 0,
+    "hoverCooldown": 300
+  },
+  {
+    "doorIndex": 3,
+    "hoverEnterTime": 412.5,
+    "hoverExitTime": 403,
+    "hingeRotation": 0,
+    "doorLiftAmount": 0,
+    "hoverCooldown": 300
+  },
+  {
+    "doorIndex": 4,
+    "hoverEnterTime": 405.5,
+    "hoverExitTime": 400.80000000447035,
+    "hingeRotation": 0,
+    "doorLiftAmount": 0,
+    "hoverCooldown": 300
+  },
+  {
+    "doorIndex": 5,
+    "hoverEnterTime": 401.3999999985099,
+    "hoverExitTime": 407.40000000596046,
+    "hingeRotation": 0,
+    "doorLiftAmount": 0,
+    "hoverCooldown": 300
+  },
+  {
+    "doorIndex": 6,
+    "hoverEnterTime": 409.70000000298023,
+    "hoverExitTime": 405.79999999701977,
+    "hingeRotation": 0,
+    "doorLiftAmount": 0,
+    "hoverCooldown": 300
+  }
+]

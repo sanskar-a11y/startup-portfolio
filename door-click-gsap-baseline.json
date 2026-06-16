@@ -1,0 +1,65 @@
+[
+  {
+    "doorIndex": 0,
+    "sectionId": "about",
+    "hingeStartRotation": 0,
+    "hingeEndRotation": 1.5708,
+    "duration": 1,
+    "ease": "power2.inOut",
+    "peakConcurrentTweens": 4
+  },
+  {
+    "doorIndex": 1,
+    "sectionId": "projects",
+    "hingeStartRotation": 0,
+    "hingeEndRotation": 0,
+    "duration": 0,
+    "ease": "",
+    "peakConcurrentTweens": 1
+  },
+  {
+    "doorIndex": 2,
+    "sectionId": "services",
+    "hingeStartRotation": 0,
+    "hingeEndRotation": 0,
+    "duration": 0,
+    "ease": "",
+    "peakConcurrentTweens": 1
+  },
+  {
+    "doorIndex": 3,
+    "sectionId": "contact",
+    "hingeStartRotation": 0,
+    "hingeEndRotation": 0,
+    "duration": 0,
+    "ease": "",
+    "peakConcurrentTweens": 1
+  },
+  {
+    "doorIndex": 4,
+    "sectionId": "achievements",
+    "hingeStartRotation": 0,
+    "hingeEndRotation": 0,
+    "duration": 0,
+    "ease": "",
+    "peakConcurrentTweens": 1
+  },
+  {
+    "doorIndex": 5,
+    "sectionId": "case_studies",
+    "hingeStartRotation": 0,
+    "hingeEndRotation": 0,
+    "duration": 0,
+    "ease": "",
+    "peakConcurrentTweens": 1
+  },
+  {
+    "doorIndex": 6,
+    "sectionId": "labs",
+    "hingeStartRotation": 0,
+    "hingeEndRotation": 0,
+    "duration": 0,
+    "ease": "",
+    "peakConcurrentTweens": 1
+  }
+]

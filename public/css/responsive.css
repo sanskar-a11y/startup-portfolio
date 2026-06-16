@@ -1,0 +1,426 @@
+/* ============================================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================================
+   Mobile-first overrides for every section of the portfolio.
+   
+   Breakpoints:
+   - ≤ 768px  → Tablet / small laptop
+   - ≤ 480px  → Phone / compact viewport
+   
+   Strategy:
+   - Reduce font sizes and spacing proportionally
+   - Collapse multi-column grids to single column
+   - Ensure touch targets are at least 44×44px
+   - Simplify decorative elements that crowd small screens
+   ============================================================================ */
+
+/* ============================= TABLET ≤ 768px ============================= */
+
+@media (max-width: 768px) {
+
+  /* -----------------------------------------------------------------------
+     HERO SECTION
+     ----------------------------------------------------------------------- */
+
+  .hero-section {
+    min-height: 100vh;
+    min-height: 100dvh;       /* Dynamic viewport height for mobile browsers */
+  }
+
+  .hero__content {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .hero__title {
+    font-size: clamp(1.6rem, 5vw, 3rem);
+    letter-spacing: 2px;
+  }
+
+  .hero__subtitle {
+    font-size: 1.2rem;
+  }
+
+  .hero__tagline {
+    font-size: 0.95rem;
+  }
+
+  /* Pull the hand-drawn frame inward */
+  .hero-section::before {
+    inset: 8px;
+  }
+
+  .hero__scroll-hint {
+    bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     GALLERY SECTION
+     ----------------------------------------------------------------------- */
+
+  .gallery-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .gallery__header {
+    margin-bottom: 2.5rem;
+  }
+
+  /* Single column for tablets and below */
+  .gallery__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 600px;
+  }
+
+  .gallery__card {
+    padding: 1.5rem;
+  }
+
+  .gallery__card-title {
+    font-size: 1.3rem;
+    letter-spacing: 1.5px;
+  }
+
+  .gallery__card-description {
+    font-size: 0.9rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     ABOUT SECTION
+     ----------------------------------------------------------------------- */
+
+  .about-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .about__card {
+    padding: 2rem;
+  }
+
+  .about__intro {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .about__skills-title {
+    font-size: 1.2rem;
+  }
+
+  .about__skills-list li {
+    font-size: 1rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     CONTACT SECTION
+     ----------------------------------------------------------------------- */
+
+  .contact-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .contact__card {
+    padding: 2rem;
+  }
+
+  .contact__intro {
+    font-size: 1.15rem;
+  }
+
+  .contact__socials {
+    gap: 1.25rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     NAVIGATION (if present in global styles)
+     ----------------------------------------------------------------------- */
+
+  /* Reduce nav padding and font size for tablets */
+  .nav,
+  .studio-nav {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .nav__link,
+  .studio-nav__link {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .nav__logo,
+  .studio-nav__logo {
+    font-size: 1.3rem;
+  }
+}
+
+
+/* ============================= PHONE ≤ 480px ============================== */
+
+@media (max-width: 480px) {
+
+  /* -----------------------------------------------------------------------
+     HERO SECTION
+     ----------------------------------------------------------------------- */
+
+  .hero__content {
+    padding: 1rem;
+    max-width: 95%;
+  }
+
+  .hero__title {
+    font-size: clamp(1.4rem, 7vw, 2.2rem);
+    letter-spacing: 1px;
+  }
+
+  .hero__subtitle {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .hero__tagline {
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+  }
+
+  /* Thin out the decorative frame on tiny screens */
+  .hero-section::before {
+    inset: 5px;
+    border-width: 2px;
+    opacity: 0.1;
+  }
+
+  .hero__scroll-hint {
+    bottom: 1rem;
+    font-size: 0.8rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     GALLERY SECTION
+     ----------------------------------------------------------------------- */
+
+  .gallery-section {
+    padding: 3rem 1rem;
+  }
+
+  .gallery__header {
+    margin-bottom: 2rem;
+  }
+
+  .gallery__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .gallery__card {
+    padding: 1.25rem;
+  }
+
+  .gallery__card-title {
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+  }
+
+  .gallery__card-description {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .gallery__card-tags {
+    gap: 6px;
+  }
+
+  .gallery__card-tag {
+    font-size: 0.75rem;
+    padding: 3px 10px;
+  }
+
+  .gallery__card-link {
+    padding: 10px 0;
+    font-size: 0.9rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     ABOUT SECTION
+     ----------------------------------------------------------------------- */
+
+  .about-section {
+    padding: 3rem 1rem;
+  }
+
+  .about__header {
+    margin-bottom: 2rem;
+  }
+
+  .about__card {
+    padding: 1.5rem;
+  }
+
+  .about__intro {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .about__divider {
+    margin: 1.5rem 0;
+  }
+
+  .about__skills-title {
+    font-size: 1.1rem;
+  }
+
+  .about__skills-list {
+    gap: 0.75rem;
+  }
+
+  .about__skills-list li {
+    font-size: 0.95rem;
+    gap: 0.5rem;
+  }
+
+  .about__cta {
+    padding: 12px 0;
+    font-size: 0.9rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     CONTACT SECTION
+     ----------------------------------------------------------------------- */
+
+  .contact-section {
+    padding: 3rem 1rem;
+    /* On small phones, allow scroll rather than forcing flex center */
+    align-items: flex-start;
+  }
+
+  .contact__header {
+    margin-bottom: 1.5rem;
+  }
+
+  .contact__card {
+    padding: 1.5rem;
+  }
+
+  .contact__intro {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact__form {
+    gap: 1.25rem;
+  }
+
+  .contact__label {
+    font-size: 13px;
+  }
+
+  .contact__input,
+  .contact__textarea {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  .contact__textarea {
+    min-height: 120px;
+  }
+
+  .contact__submit {
+    padding: 12px 0;
+    font-size: 0.95rem;
+    /* Ensure touch-friendly height */
+    min-height: 48px;
+  }
+
+  .contact__socials {
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  /* Ensure social circles stay touch-friendly (44×44 min) */
+  .contact__social-link {
+    width: 46px;
+    height: 46px;
+  }
+
+  .contact__social-link svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .contact__footer {
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     NAVIGATION
+     ----------------------------------------------------------------------- */
+
+  .nav,
+  .studio-nav {
+    padding: 0.5rem 1rem;
+  }
+
+  .nav__link,
+  .studio-nav__link {
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+  }
+
+  .nav__logo,
+  .studio-nav__logo {
+    font-size: 1.1rem;
+  }
+
+  /* -----------------------------------------------------------------------
+     GLOBAL TYPOGRAPHY SCALING
+     ----------------------------------------------------------------------- */
+
+  /* All section headings scale down uniformly on phones */
+  .gallery__header h2,
+  .gallery__title,
+  .about__header h2,
+  .about__title,
+  .contact__header h2,
+  .contact__title {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+    letter-spacing: 2px;
+  }
+}
+
+
+/* ==================== EXTRA SMALL / LANDSCAPE PHONES ====================== */
+
+@media (max-width: 360px) {
+
+  /* Even more compact spacing for very small devices */
+  .gallery-section,
+  .about-section,
+  .contact-section {
+    padding: 2.5rem 0.75rem;
+  }
+
+  .gallery__card,
+  .about__card,
+  .contact__card {
+    padding: 1rem;
+  }
+
+  .hero__title {
+    font-size: 1.3rem;
+  }
+}
+
+/* ==================== TALL VIEWPORTS (LANDSCAPE LOCK) ===================== */
+
+/* On very short landscape viewports the hero can be uncomfortably cramped.
+   Reduce the min-height so the corridor image still renders fully. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    min-height: 400px;
+  }
+
+  .hero__scroll-hint {
+    display: none;
+  }
+}

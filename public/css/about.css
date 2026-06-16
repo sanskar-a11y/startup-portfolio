@@ -1,0 +1,290 @@
+/* ============================================================================
+   ABOUT / STUDIO SECTION
+   ============================================================================
+   A single-column layout centred on a torn-paper card containing:
+   - An introductory paragraph (Inter)
+   - A dashed divider
+   - A skills list with hand-drawn bullet decorations
+   - An optional 16:9 media embed (video / image)
+   - A call-to-action button at the bottom
+   
+   Entrance is scroll-triggered: elements fade in when they intersect
+   the viewport.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   1. SECTION WRAPPER
+   --------------------------------------------------------------------------- */
+
+.about-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 6rem 2rem;
+  z-index: var(--z-base);
+
+  /* Background removed to reveal WebGL canvas underneath */
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   2. CONTENT CONTAINER
+   --------------------------------------------------------------------------- */
+
+.about__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------------------------
+   3. SECTION HEADER
+   --------------------------------------------------------------------------- */
+
+.about__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about__header h2,
+.about__title {
+  font-family: var(--font-sketch);
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-text);
+  margin: 0;
+  display: inline-block;
+  position: relative;
+}
+
+/* Dashed underline decoration */
+.about__header h2::after,
+.about__title::after {
+  content: '';
+  display: block;
+  width: 60%;
+  margin: 0.75rem auto 0;
+  border-bottom: var(--border-dashed);
+}
+
+/* ---------------------------------------------------------------------------
+   4. ABOUT CARD — Torn-Paper Studio Card
+   --------------------------------------------------------------------------- */
+
+.about__card {
+  position: relative;
+  padding: 2.5rem;
+
+  /* Paper look */
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  background-image: var(--texture-paper);
+  background-repeat: repeat;
+  background-size: 300px 300px;
+
+  /* Pencil-shadow */
+  box-shadow: var(--shadow-drop);
+
+  /* -------------------------------------------------------------------
+     TORN-PAPER CLIP-PATH
+     Matching the gallery card style for visual consistency.
+     ------------------------------------------------------------------- */
+  clip-path: var(--clip-torn-paper);
+
+  /* Scroll-triggered fade-in (starts hidden) */
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Visible state — toggled by IntersectionObserver */
+.about__card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------------------
+   5. INTRO PARAGRAPH
+   --------------------------------------------------------------------------- */
+
+.about__intro {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-subtle);
+  margin: 0;
+}
+
+/* Emphasised words within the intro */
+.about__intro strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+   6. DASHED DIVIDER
+   --------------------------------------------------------------------------- */
+
+.about__divider {
+  border: none;
+  border-top: var(--border-dashed-light);
+  margin: 2rem 0;
+}
+
+/* ---------------------------------------------------------------------------
+   7. SKILLS TITLE
+   --------------------------------------------------------------------------- */
+
+.about__skills-title {
+  font-family: var(--font-sketch);
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-text);
+  margin: 0 0 1.25rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* Decorative dashes flanking the title */
+.about__skills-title::before {
+  content: '— ';
+  color: var(--color-border);
+}
+
+.about__skills-title::after {
+  content: ' —';
+  color: var(--color-border);
+}
+
+/* ---------------------------------------------------------------------------
+   8. SKILLS LIST
+   --------------------------------------------------------------------------- */
+
+.about__skills-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about__skills-list li {
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+  color: var(--color-subtle);
+  line-height: 1.4;
+
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+/* Hand-drawn circle bullet decoration */
+.about__skills-list li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  margin-top: 2px;
+
+  /* SVG hand-drawn circle */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Ccircle cx='6' cy='6' r='4.5' fill='none' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-dasharray='3,2'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Bold label within each skill item */
+.about__skills-list li strong {
+  color: var(--color-text);
+  font-weight: 700;
+  min-width: fit-content;
+}
+
+/* ---------------------------------------------------------------------------
+   9. MEDIA CONTAINER (16:9)
+   --------------------------------------------------------------------------- */
+
+/* Reusable "studio-media-container" pattern — fixed aspect ratio */
+.about__media {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;                /* 16:9 */
+  margin: 2rem 0;
+
+  background-color: #111;
+  border: 2px solid var(--color-text);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.about__media iframe,
+.about__media video,
+.about__media img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+
+/* ---------------------------------------------------------------------------
+   10. CTA BUTTON
+   --------------------------------------------------------------------------- */
+
+/* Full-width action button at the card bottom — studio-action-button */
+.about__cta {
+  display: block;
+  width: 100%;
+  padding: 14px 0;
+  margin-top: 2rem;
+
+  font-family: var(--font-sketch);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--color-text);
+
+  border: 2px solid var(--color-text);
+  background: transparent;
+  cursor: pointer;
+
+  /* Wobbly hand-drawn border-radius */
+  border-radius: var(--border-wobbly);
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
+}
+
+.about__cta:hover {
+  background-color: var(--color-text);
+  color: var(--color-card);
+  transform: translateY(-2px);
+}
+
+.about__cta:active {
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------------------
+   11. REDUCED MOTION
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .about__card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
