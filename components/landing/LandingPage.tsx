@@ -13,7 +13,8 @@ export default function LandingPage() {
         inset: 0,
         zIndex: 50,
         overflow: 'hidden',
-        backgroundColor: '#fdfdfc'
+        backgroundColor: '#05050a',
+        color: '#ffffff'
       }}
     >
       <Illustration />

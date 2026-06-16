@@ -31,7 +31,7 @@ let globalTextureLoader: any;
 const textureCache = new Map<any, any>();
 const labelCache = new Map<any, any>();
 
-const SEGMENT_LENGTH = 100;
+const SEGMENT_LENGTH = 30;
 let NUM_SEGMENTS = 7;
 const CORRIDOR_WIDTH = 10;
 const CORRIDOR_HEIGHT = 6;

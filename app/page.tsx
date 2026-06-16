@@ -64,19 +64,6 @@ export default function Home() {
         </footer>
       </div>
 
-      {/* PAPER TEAR PRELOADER */}
-      <div className="paper-preloader" id="paper-preloader" role="status" aria-label="Loading portfolio">
-        <div className="paper-half paper-half--left"></div>
-        <div className="paper-half paper-half--right"></div>
-        <div className="paper-center" id="paper-center">
-          <div className="paper-percentage" id="preloader-percentage" aria-live="polite">0%</div>
-          <svg className="paper-circle" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" stroke="rgba(0,0,0,0.5)" strokeWidth="1.5" strokeDasharray="6,4" fill="none" />
-            <circle cx="50" cy="50" r="35" stroke="rgba(0,0,0,0.3)" strokeWidth="1" strokeDasharray="3,3" fill="none" />
-          </svg>
-        </div>
-      </div>
-
 
       {/* MAIN APP WRAPPER */}
       <div className="app" id="app">
