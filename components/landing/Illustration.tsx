@@ -7,7 +7,7 @@ export default function Illustration() {
       inset: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: '#05050a',
+      backgroundColor: '#faf7f2',
       zIndex: -1,
       overflow: 'hidden',
       display: 'flex',
@@ -24,7 +24,7 @@ export default function Illustration() {
         width: '800px',
         height: '800px',
         transform: 'translate(-50%, -50%)',
-        background: 'radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(5,5,10,0) 70%)',
+        background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(250,247,242,0) 70%)',
         zIndex: 0
       }}></div>
 
@@ -32,7 +32,7 @@ export default function Illustration() {
       <div style={{
         position: 'absolute',
         inset: 0,
-        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px)',
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px)',
         backgroundSize: '40px 40px',
         backgroundPosition: 'center center',
         zIndex: 0,
@@ -54,7 +54,7 @@ export default function Illustration() {
           letterSpacing: '0.2em',
           textTransform: 'uppercase',
           margin: 0,
-          background: 'linear-gradient(to right, #fff, #888)',
+          background: 'linear-gradient(to right, #3a3530, #6c6356)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           opacity: 0.9
@@ -66,9 +66,9 @@ export default function Illustration() {
           fontWeight: 400,
           letterSpacing: '0.4em',
           textTransform: 'uppercase',
-          color: '#888',
+          color: '#8c7b6b',
           marginTop: '1rem',
-          opacity: 0.7
+          opacity: 0.9
         }}>
           Creative Developer
         </p>
@@ -76,17 +76,17 @@ export default function Illustration() {
       
       {/* Subtle Floating Particles / Stars (CSS) */}
       <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 0, opacity: 0.4 }}>
-        <g opacity="0.5">
-          <circle cx="20%" cy="30%" r="1" fill="#fff">
+        <g opacity="0.6">
+          <circle cx="20%" cy="30%" r="1.5" fill="#d4c5b0">
             <animate attributeName="opacity" values="0.1;0.8;0.1" dur="4s" repeatCount="indefinite" />
           </circle>
-          <circle cx="80%" cy="40%" r="1" fill="#fff">
+          <circle cx="80%" cy="40%" r="1.5" fill="#d4c5b0">
             <animate attributeName="opacity" values="0.1;0.8;0.1" dur="5s" repeatCount="indefinite" />
           </circle>
-          <circle cx="70%" cy="80%" r="1" fill="#fff">
+          <circle cx="70%" cy="80%" r="1.5" fill="#d4c5b0">
             <animate attributeName="opacity" values="0.1;0.8;0.1" dur="3s" repeatCount="indefinite" />
           </circle>
-          <circle cx="30%" cy="70%" r="1.5" fill="#fff">
+          <circle cx="30%" cy="70%" r="2" fill="#d4c5b0">
             <animate attributeName="opacity" values="0.1;0.8;0.1" dur="6s" repeatCount="indefinite" />
           </circle>
         </g>

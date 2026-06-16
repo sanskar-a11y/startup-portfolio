@@ -39,11 +39,11 @@ function DoorGeometry({ side }: { side: 'left' | 'right' }) {
     >
       <mesh position={[meshPositionX, 1.1, 0]} castShadow receiveShadow>
         <boxGeometry args={[doorWidth, 2.2, 0.05]} />
-        <meshStandardMaterial color="#0a0a0f" metalness={0.9} roughness={0.1} emissive="#020205" />
+        <meshStandardMaterial color="#efe9dd" metalness={0.1} roughness={0.2} emissive="#0a0a05" emissiveIntensity={0.2} />
         {/* Door handle */}
         <mesh position={[isLeft ? 0.3 : -0.3, 0, 0.05]}>
           <sphereGeometry args={[0.04, 16, 16]} />
-          <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} />
+          <meshStandardMaterial color="#c5a059" emissive="#000000" />
         </mesh>
       </mesh>
     </group>
