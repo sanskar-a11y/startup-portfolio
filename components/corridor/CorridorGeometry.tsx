@@ -9,7 +9,6 @@ const SEGMENT_LENGTH = 30;
 const CORRIDOR_WIDTH = 10;
 const CORRIDOR_HEIGHT = 6;
 
-import { DoorGeometry } from '../door/DoorGeometry';
 import { WallDecorations } from './WallDecorations';
 import { FinalDoorGeometry } from '../door/FinalDoorGeometry';
 import { useUIStore } from '../../store/uiStore';

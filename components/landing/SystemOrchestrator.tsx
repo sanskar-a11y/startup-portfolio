@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useLandingStore } from '../../store/landingStore';
-import LandingPage from './LandingPage';
 import Experience from '../experience/Experience';
 
 export default function SystemOrchestrator() {
