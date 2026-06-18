@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUIStore } from '../../store/uiStore';
-import { MinimalTree, MinimalGate } from './MinimalProps';
+import { PremiumTreeLeft, PremiumTreeRight, PremiumHouseFacade } from './MinimalProps';
 
 export function FrontDoor({ children }: { children: React.ReactNode }) {
   const [isEntered, setIsEntered] = useState(false);
@@ -20,8 +20,7 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
       const ctx = new AudioContext();
       const t = ctx.currentTime;
       
-      // 1. White Noise burst
-      const bufferSize = ctx.sampleRate * 2; // 2 seconds
+      const bufferSize = ctx.sampleRate * 2;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
       for (let i = 0; i < bufferSize; i++) {
@@ -30,7 +29,6 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
       const noise = ctx.createBufferSource();
       noise.buffer = buffer;
       
-      // Filter the noise to make it sound like a deep "whoosh"
       const noiseFilter = ctx.createBiquadFilter();
       noiseFilter.type = 'lowpass';
       noiseFilter.frequency.setValueAtTime(2000, t);
@@ -45,7 +43,6 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
       noiseFilter.connect(noiseGain);
       noiseGain.connect(ctx.destination);
       
-      // 2. Deep impact synth
       const osc = ctx.createOscillator();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(200, t);
@@ -59,7 +56,6 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
       osc.connect(oscGain);
       oscGain.connect(ctx.destination);
       
-      // Play
       noise.start(t);
       noise.stop(t + 2);
       osc.start(t);
@@ -70,13 +66,9 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
   };
 
   const handleClick = () => {
-    // 1. Play the synthesized flash sound
     playFlashSound();
-
-    // 2. Instantly trigger the bright white flash
     fadeInWhite();
     
-    // 3. Wait for the flash to cover the screen
     setTimeout(() => {
       setIsEntered(true);
       setHasEntered(true);
@@ -85,7 +77,6 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
         document.dispatchEvent(new CustomEvent('preloaderComplete'));
       }
       
-      // 4. Slowly fade out the white flash to reveal the corridor
       setTimeout(() => {
         fadeOutWhite();
       }, 300);
@@ -101,66 +92,119 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
             style={{
               position: 'fixed',
               inset: 0,
-              zIndex: 99999, // ensures it sits above everything
+              zIndex: 99999,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#f5f5f5', // light background for the drawing
-              cursor: 'pointer'
+              backgroundColor: '#faf7f2', // Soft, museum gallery beige
+              cursor: 'pointer',
+              overflow: 'hidden'
             }}
             exit={{ 
               backgroundColor: '#ffffff',
               opacity: 0 
             }}
             transition={{ 
-              backgroundColor: { duration: 0.1 }, // flash to pure white
-              opacity: { delay: 0.1, duration: 1.5, ease: "easeOut" } // then slow fade out
+              backgroundColor: { duration: 0.1 },
+              opacity: { delay: 0.1, duration: 1.5, ease: "easeOut" }
             }}
             onClick={handleClick}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onTouchStart={() => setIsHovered(true)}
+            onTouchEnd={() => setIsHovered(false)}
           >
+            {/* Subtle background glow effect */}
+            <motion.div 
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '60vw',
+                height: '60vw',
+                background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(250,247,242,0) 70%)',
+                zIndex: 0,
+              }}
+              animate={{ opacity: isHovered ? 1 : 0.4 }}
+              transition={{ duration: 0.6 }}
+            />
+
             <motion.div 
               style={{
                 display: 'flex',
                 alignItems: 'flex-end',
                 justifyContent: 'center',
-                gap: '2rem',
+                gap: '1rem',
                 width: '100%',
-                maxWidth: '800px',
-                height: '300px'
+                maxWidth: '1200px',
+                height: '400px',
+                zIndex: 1
               }}
-              animate={{ filter: isHovered ? 'brightness(0.6)' : 'brightness(1)' }}
-              transition={{ duration: 0.3 }}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              onTouchStart={() => setIsHovered(true)}
-              onTouchEnd={() => setIsHovered(false)}
+              animate={{ 
+                scale: isHovered ? 1.02 : 1,
+                filter: isHovered ? 'drop-shadow(0px 30px 40px rgba(0,0,0,0.12)) brightness(1.05)' : 'drop-shadow(0px 10px 20px rgba(0,0,0,0.05)) brightness(1)'
+              }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <div style={{ flex: 1, height: '100%' }}>
-                <MinimalTree />
+              <div style={{ flex: 1, height: '80%', maxWidth: '250px' }}>
+                <PremiumTreeLeft />
               </div>
-              <div style={{ flex: 1, height: '100%', pointerEvents: 'none' }}>
-                <MinimalGate />
+              
+              <div style={{ flex: 2, height: '100%', maxWidth: '500px', pointerEvents: 'none' }}>
+                <PremiumHouseFacade />
               </div>
-              <div style={{ flex: 1, height: '100%' }}>
-                <MinimalTree />
+              
+              <div style={{ flex: 1, height: '80%', maxWidth: '250px' }}>
+                <PremiumTreeRight />
               </div>
             </motion.div>
             
-            <motion.p 
-              animate={{ filter: isHovered ? 'brightness(0.6)' : 'brightness(1)' }}
-              transition={{ duration: 0.3 }}
+            <motion.div
               style={{
-                marginTop: '3rem',
-                color: '#1a1a1a',
-                fontFamily: "'Inter', sans-serif",
-                letterSpacing: '0.1em',
-                fontWeight: 600,
-                opacity: 0.8
+                marginTop: '4rem',
+                zIndex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '0.5rem'
               }}
             >
-              CLICK TO ENTER
-            </motion.p>
+              <motion.p 
+                animate={{ 
+                  color: isHovered ? '#1a1a1a' : '#8c7b6b',
+                  letterSpacing: isHovered ? '0.25em' : '0.15em'
+                }}
+                transition={{ duration: 0.5 }}
+                style={{
+                  margin: 0,
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 400,
+                  fontSize: '1.2rem',
+                  textTransform: 'uppercase'
+                }}
+              >
+                TOMASZ SZMAJDA
+              </motion.p>
+              <motion.p 
+                animate={{ 
+                  opacity: isHovered ? 1 : 0.5,
+                  y: isHovered ? 0 : 5
+                }}
+                transition={{ duration: 0.5 }}
+                style={{
+                  margin: 0,
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 300,
+                  fontSize: '0.8rem',
+                  letterSpacing: '0.3em',
+                  color: '#6c6356'
+                }}
+              >
+                Click to Enter
+              </motion.p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
