@@ -1,97 +1,119 @@
 "use client";
 
+import React, { useState } from 'react';
 import { motion } from "framer-motion";
 
-export const PremiumTreeLeft = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 200 300"
-      width="100%"
-      height="100%"
-      style={{
-        stroke: "#1a1a1a",
-        strokeWidth: 1.5,
-        fill: "none",
-        strokeLinecap: "round",
-        strokeLinejoin: "round",
-        filter: "drop-shadow(0px 10px 20px rgba(0,0,0,0.05))"
-      }}
-    >
-      {/* Elegant Trunk */}
-      <path d="M100 300 Q95 200 100 120 M90 300 Q92 230 85 150 M110 300 Q105 230 105 170" />
+// Audio Synth Helpers
+const playKnock = () => {
+  try {
+    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const t = ctx.currentTime;
 
-      {/* Swaying canopy/branches */}
-      <motion.g
-        animate={{ rotate: [-0.5, 1, -0.5] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "100px 150px" }}
-      >
-        {/* Branch structure */}
-        <path d="M98 170 Q60 150 40 130 M88 200 Q50 190 30 160" />
-        <path d="M100 160 Q140 140 160 110 M102 180 Q150 170 180 150" />
-        <path d="M100 120 Q90 90 70 70 M100 120 Q120 80 140 60 M100 120 L105 65" />
+    const playSingleKnock = (time: number) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(150, time);
+      osc.frequency.exponentialRampToValueAtTime(40, time + 0.1);
+      
+      gain.gain.setValueAtTime(0, time);
+      gain.gain.linearRampToValueAtTime(1, time + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.01, time + 0.1);
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(time);
+      osc.stop(time + 0.15);
+    };
 
-        {/* Delicate, layered canopy outlines */}
-        <path d="M40 120 C 10 120, 10 70, 40 60 C 50 30, 90 20, 110 30 C 140 10, 180 30, 170 70 C 190 90, 170 130, 140 120 C 120 140, 70 140, 40 120 Z" fill="#faf7f2" fillOpacity="0.8" />
-        <path d="M50 100 C 30 100, 30 60, 50 50 C 60 25, 90 20, 110 25 C 130 10, 160 25, 150 55 C 170 70, 150 100, 130 95 C 110 110, 70 110, 50 100 Z" fill="#ffffff" fillOpacity="0.5" />
-        
-        {/* Subtle leaf details */}
-        <path d="M60 50 Q70 40 80 55 M130 40 Q140 30 150 45 M150 80 Q160 70 170 85 M50 80 Q60 70 70 85" strokeWidth="1" />
-      </motion.g>
-    </svg>
-  );
+    // Double knock
+    playSingleKnock(t);
+    playSingleKnock(t + 0.15);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
-export const PremiumTreeRight = ({ className }: { className?: string }) => {
+const playGlassChime = () => {
+  try {
+    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const t = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    // Glassy sine wave
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1200, t);
+    osc.frequency.exponentialRampToValueAtTime(800, t + 1);
+    
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(0.3, t + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.01, t + 1);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 1.5);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const DetailedSketchTree = ({ className }: { className?: string }) => {
   return (
     <svg
       className={className}
-      viewBox="0 0 200 300"
+      viewBox="0 0 250 400"
       width="100%"
       height="100%"
       style={{
         stroke: "#1a1a1a",
-        strokeWidth: 1.5,
+        strokeWidth: 1.2,
         fill: "none",
         strokeLinecap: "round",
         strokeLinejoin: "round",
-        filter: "drop-shadow(0px 10px 20px rgba(0,0,0,0.05))"
       }}
     >
-      {/* Elegant Trunk */}
-      <path d="M100 300 Q105 200 100 120 M110 300 Q108 230 115 150 M90 300 Q95 230 95 170" />
+      {/* Detailed Trunk with bark texture lines */}
+      <path d="M120 400 Q110 300 120 180 M110 400 Q112 330 100 220 M130 400 Q125 330 135 250" />
+      <path d="M115 350 L115 320 M125 380 L125 340 M118 280 L118 250" strokeWidth="0.8" opacity="0.5" />
 
-      {/* Swaying canopy/branches */}
       <motion.g
-        animate={{ rotate: [0.5, -1, 0.5] }}
+        animate={{ rotate: [-0.5, 1, -0.5] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "100px 150px" }}
+        style={{ transformOrigin: "120px 200px" }}
       >
         {/* Branch structure */}
-        <path d="M102 170 Q140 150 160 130 M112 200 Q150 190 170 160" />
-        <path d="M100 160 Q60 140 40 110 M98 180 Q50 170 20 150" />
-        <path d="M100 120 Q110 90 130 70 M100 120 Q80 80 60 60 M100 120 L95 65" />
+        <path d="M118 230 Q160 200 190 170 M122 260 Q170 240 210 200" />
+        <path d="M115 220 Q70 190 40 150 M110 240 Q60 230 30 200" />
+        <path d="M120 180 Q130 130 150 100 M120 180 Q100 120 80 90 M120 180 L115 100" />
 
-        {/* Canopy outlines */}
-        <path d="M160 120 C 190 120, 190 70, 160 60 C 150 30, 110 20, 90 30 C 60 10, 20 30, 30 70 C 10 90, 30 130, 60 120 C 80 140, 130 140, 160 120 Z" fill="#faf7f2" fillOpacity="0.8" />
-        <path d="M150 100 C 170 100, 170 60, 150 50 C 140 25, 110 20, 90 25 C 70 10, 40 25, 50 55 C 30 70, 50 100, 70 95 C 90 110, 130 110, 150 100 Z" fill="#ffffff" fillOpacity="0.5" />
+        {/* Minimalist but detailed canopy (multiple organic blobs) */}
+        <path d="M190 160 C 230 160, 240 90, 190 80 C 180 40, 130 20, 100 40 C 60 10, 10 40, 20 90 C -10 120, 20 180, 60 160 C 90 190, 160 190, 190 160 Z" fill="#faf7f2" fillOpacity="0.9" />
+        <path d="M180 140 C 210 140, 210 80, 180 70 C 170 40, 130 30, 100 45 C 70 20, 30 40, 40 80 C 10 100, 30 150, 60 140 C 90 160, 150 160, 180 140 Z" fill="#ffffff" fillOpacity="0.4" />
 
-        {/* Rope with mouse hanging from branch */}
+        {/* Hanging rope & Mouse */}
         <motion.g
           whileHover={{ rotate: [0, 8, -6, 3, 0] }}
           transition={{ duration: 2, ease: "easeInOut" }}
-          style={{ transformOrigin: "60px 120px", cursor: "pointer" }}
+          style={{ transformOrigin: "190px 170px", cursor: "pointer" }}
         >
-          {/* Rope */}
-          <path d="M60 120 Q62 170 60 220" strokeWidth="1" />
+          {/* Rope tied around branch */}
+          <path d="M185 168 Q190 172 195 168 M190 170 Q192 250 190 320" strokeWidth="1" />
           
-          {/* Mouse */}
-          <g transform="translate(60, 220)" fill="#ffffff">
-            <path d="M-10,0 C-12,-12 12,-12 10,0 L12,18 C12,30 -12,30 -12,18 Z" />
-            <path d="M-12,8 Q0,10 12,8" />
-            <path d="M0,8 L0,-2" />
-            <path d="M-2,0 L2,0 M-2,2 L2,2" />
+          {/* Detailed Mouse */}
+          <g transform="translate(190, 320)" fill="#faf7f2">
+            <path d="M-12,0 C-15,-15 15,-15 12,0 L15,22 C15,35 -15,35 -15,22 Z" />
+            <path d="M-15,10 Q0,12 15,10" />
+            <path d="M0,10 L0,-2" />
+            <path d="M-3,0 L3,0 M-3,2 L3,2" strokeWidth="1.5" />
+            {/* Wire tail */}
+            <path d="M0,35 Q-10,50 10,60" fill="none" strokeWidth="1" />
           </g>
         </motion.g>
       </motion.g>
@@ -99,16 +121,20 @@ export const PremiumTreeRight = ({ className }: { className?: string }) => {
   );
 };
 
-export const PremiumHouseFacade = ({ className }: { className?: string }) => {
+export const DetailedInteractiveHouse = ({ className }: { className?: string }) => {
+  const [doorHovered, setDoorHovered] = useState(false);
+  const [leftWindowHovered, setLeftWindowHovered] = useState(false);
+  const [rightWindowHovered, setRightWindowHovered] = useState(false);
+
   return (
     <svg
       className={className}
-      viewBox="0 0 400 300"
+      viewBox="0 0 500 400"
       width="100%"
       height="100%"
       style={{
         stroke: "#1a1a1a",
-        strokeWidth: 1.5,
+        strokeWidth: 1.2,
         fill: "none",
         strokeLinecap: "round",
         strokeLinejoin: "round",
@@ -116,71 +142,106 @@ export const PremiumHouseFacade = ({ className }: { className?: string }) => {
       }}
     >
       <defs>
-        {/* Subtle Brick Pattern */}
-        <pattern id="brick" width="20" height="10" patternUnits="userSpaceOnUse">
-          <path d="M0 5 L20 5 M10 5 L10 10 M0 0 L0 5" stroke="#1a1a1a" strokeWidth="0.5" opacity="0.2" />
+        {/* Minimalist Brick/Line Texture */}
+        <pattern id="minimal-brick" width="40" height="15" patternUnits="userSpaceOnUse">
+          <path d="M0 15 L40 15 M20 15 L20 20 M0 0 L0 5" stroke="#1a1a1a" strokeWidth="0.5" opacity="0.15" />
         </pattern>
-        {/* Glass reflection */}
-        <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.6" />
-          <stop offset="50%" stopColor="#ffffff" stopOpacity="0.0" />
-          <stop offset="100%" stopColor="#ffffff" stopOpacity="0.2" />
-        </linearGradient>
+        {/* Blueprint shadow */}
+        <pattern id="hatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#1a1a1a" strokeWidth="0.5" opacity="0.2" />
+        </pattern>
       </defs>
 
-      {/* Main House Block */}
-      <rect x="60" y="80" width="280" height="220" fill="url(#brick)" />
+      {/* House Base */}
+      <rect x="50" y="100" width="400" height="280" fill="url(#minimal-brick)" />
       
-      {/* Foundation Line */}
-      <path d="M20 300 L380 300" strokeWidth="2" />
-      <path d="M40 295 L360 295" strokeWidth="1" opacity="0.5" />
+      {/* Ground/Grass Sketch */}
+      <path d="M-50 380 L550 380" strokeWidth="2" />
+      <path d="M0 385 Q 50 387 100 385 T 200 388 T 300 384 T 400 387 T 500 385" strokeWidth="0.8" opacity="0.5" />
+      <path d="M20 380 L15 370 M30 380 L35 375 M480 380 L485 370" strokeWidth="0.8" opacity="0.6" />
 
-      {/* Roof / Cornice */}
-      <path d="M50 80 L350 80 L340 60 L60 60 Z" fill="#ffffff" strokeWidth="2" />
-      <path d="M55 60 L345 60 L335 40 L65 40 Z" fill="#faf7f2" />
-      
-      {/* Left Window */}
-      <g transform="translate(90, 120)">
-        {/* Frame */}
-        <rect x="0" y="0" width="60" height="100" fill="#ffffff" />
-        {/* Inner Frame */}
-        <rect x="5" y="5" width="50" height="90" fill="url(#glass)" />
-        {/* Mullions */}
-        <path d="M25 5 L25 95 M5 50 L55 50 M5 30 L55 30 M5 70 L55 70" />
-        {/* Ledge */}
-        <path d="M-5 100 L65 100 L65 105 L-5 105 Z" fill="#ffffff" />
-        {/* Arch over window */}
-        <path d="M0 0 C 15 -15, 45 -15, 60 0" strokeWidth="1" />
+      {/* Detailed Roof */}
+      <path d="M30 100 L470 100 L450 60 L50 60 Z" fill="#ffffff" strokeWidth="1.5" />
+      <path d="M40 60 L460 60 L440 20 L60 20 Z" fill="url(#hatch)" />
+      {/* Roof Shingle hints */}
+      <path d="M70 40 L90 40 M120 40 L140 40 M300 40 L320 40" strokeWidth="0.8" opacity="0.5" />
+
+      {/* Interactive Left Window */}
+      <g 
+        transform="translate(90, 150)"
+        onMouseEnter={() => { setLeftWindowHovered(true); playGlassChime(); }}
+        onMouseLeave={() => setLeftWindowHovered(false)}
+        style={{ cursor: 'pointer' }}
+      >
+        <rect x="0" y="0" width="80" height="130" fill="#ffffff" />
+        {/* Glass tint changes to bluish on hover */}
+        <motion.rect 
+          x="5" y="5" width="70" height="120" 
+          animate={{ fill: leftWindowHovered ? 'rgba(173, 216, 230, 0.4)' : 'rgba(255, 255, 255, 0)' }}
+          transition={{ duration: 0.3 }}
+        />
+        <path d="M40 5 L40 125 M5 65 L75 65 M5 40 L75 40 M5 90 L75 90" strokeWidth="1" />
+        <path d="M-10 130 L90 130 L90 138 L-10 138 Z" fill="#ffffff" />
+        {/* Curtains hint */}
+        <path d="M5 5 Q 20 30 5 60 M75 5 Q 60 30 75 60" strokeWidth="0.8" opacity="0.5" />
       </g>
 
-      {/* Right Window */}
-      <g transform="translate(250, 120)">
-        <rect x="0" y="0" width="60" height="100" fill="#ffffff" />
-        <rect x="5" y="5" width="50" height="90" fill="url(#glass)" />
-        <path d="M25 5 L25 95 M5 50 L55 50 M5 30 L55 30 M5 70 L55 70" />
-        <path d="M-5 100 L65 100 L65 105 L-5 105 Z" fill="#ffffff" />
-        <path d="M0 0 C 15 -15, 45 -15, 60 0" strokeWidth="1" />
+      {/* Interactive Right Window */}
+      <g 
+        transform="translate(330, 150)"
+        onMouseEnter={() => { setRightWindowHovered(true); playGlassChime(); }}
+        onMouseLeave={() => setRightWindowHovered(false)}
+        style={{ cursor: 'pointer' }}
+      >
+        <rect x="0" y="0" width="80" height="130" fill="#ffffff" />
+        {/* Glass tint changes to bluish on hover */}
+        <motion.rect 
+          x="5" y="5" width="70" height="120" 
+          animate={{ fill: rightWindowHovered ? 'rgba(173, 216, 230, 0.4)' : 'rgba(255, 255, 255, 0)' }}
+          transition={{ duration: 0.3 }}
+        />
+        <path d="M40 5 L40 125 M5 65 L75 65 M5 40 L75 40 M5 90 L75 90" strokeWidth="1" />
+        <path d="M-10 130 L90 130 L90 138 L-10 138 Z" fill="#ffffff" />
+        <path d="M5 5 Q 20 30 5 60 M75 5 Q 60 30 75 60" strokeWidth="0.8" opacity="0.5" />
       </g>
 
-      {/* Grand Entrance (Door) */}
-      <g transform="translate(170, 130)">
-        {/* Door frame */}
-        <path d="M0 170 L0 20 C 0 -10, 60 -10, 60 20 L60 170 Z" fill="#ffffff" strokeWidth="2" />
+      {/* Interactive Grand Door */}
+      <g 
+        transform="translate(210, 160)"
+        onMouseEnter={() => { setDoorHovered(true); playKnock(); }}
+        onMouseLeave={() => setDoorHovered(false)}
+        style={{ cursor: 'pointer' }}
+      >
+        {/* Door frame arch */}
+        <path d="M0 220 L0 30 C 0 -15, 80 -15, 80 30 L80 220 Z" fill="#ffffff" strokeWidth="1.5" />
         
-        {/* Left Door Panel */}
-        <rect x="5" y="25" width="24" height="140" fill="url(#glass)" />
-        <path d="M12 35 L22 35 M12 45 L22 45 M12 55 L22 55" strokeWidth="1" />
-        {/* Right Door Panel */}
-        <rect x="31" y="25" width="24" height="140" fill="url(#glass)" />
-        <path d="M38 35 L48 35 M38 45 L48 45 M38 55 L48 55" strokeWidth="1" />
+        {/* Inner Door Shadow/Fill changes to darker on hover */}
+        <motion.path 
+          d="M5 220 L5 30 C 5 -5, 75 -5, 75 30 L75 220 Z"
+          animate={{ fill: doorHovered ? 'rgba(0, 0, 0, 0.15)' : 'rgba(0, 0, 0, 0.02)' }}
+          transition={{ duration: 0.2 }}
+        />
 
-        {/* Intricate Handles */}
-        <circle cx="23" cy="95" r="3" fill="#1a1a1a" />
-        <circle cx="37" cy="95" r="3" fill="#1a1a1a" />
-        <path d="M23 98 L23 115 M37 98 L37 115" strokeWidth="2" />
+        {/* Detailed Panels */}
+        <rect x="10" y="40" width="26" height="170" fill="none" strokeWidth="0.8" />
+        <rect x="15" y="50" width="16" height="40" fill="none" strokeWidth="0.5" />
+        <rect x="15" y="100" width="16" height="40" fill="none" strokeWidth="0.5" />
+        <rect x="15" y="150" width="16" height="40" fill="none" strokeWidth="0.5" />
 
-        {/* Steps leading up */}
-        <path d="M-10 170 L70 170 M-20 180 L80 180 M-30 190 L90 190" strokeWidth="1.5" />
+        <rect x="44" y="40" width="26" height="170" fill="none" strokeWidth="0.8" />
+        <rect x="49" y="50" width="16" height="40" fill="none" strokeWidth="0.5" />
+        <rect x="49" y="100" width="16" height="40" fill="none" strokeWidth="0.5" />
+        <rect x="49" y="150" width="16" height="40" fill="none" strokeWidth="0.5" />
+
+        <path d="M40 220 L40 30" strokeWidth="1" />
+
+        {/* Premium Hardware/Handles */}
+        <circle cx="32" cy="130" r="3" fill="#1a1a1a" />
+        <circle cx="48" cy="130" r="3" fill="#1a1a1a" />
+        <path d="M32 133 L32 145 M48 133 L48 145" strokeWidth="1.5" />
+
+        {/* Step */}
+        <path d="M-15 220 L95 220 L95 228 L-15 228 Z" fill="#ffffff" />
       </g>
     </svg>
   );
