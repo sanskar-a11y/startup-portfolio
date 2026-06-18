@@ -1,14 +1,32 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 
-// Audio Synth Helpers
+// Shared AudioContext to handle browser autoplay policies
+let audioCtx: AudioContext | null = null;
+
+const getAudioContext = () => {
+  if (typeof window === 'undefined') return null;
+  if (!audioCtx) {
+    const windowAudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (windowAudioCtx) {
+      audioCtx = new windowAudioCtx();
+    }
+  }
+  return audioCtx;
+};
+
 const playKnock = () => {
   try {
-    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    
+    // Browsers require a user gesture to resume audio
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+
     const t = ctx.currentTime;
 
     const playSingleKnock = (time: number) => {
@@ -32,15 +50,19 @@ const playKnock = () => {
     playSingleKnock(t);
     playSingleKnock(t + 0.15);
   } catch (e) {
-    console.error(e);
+    console.error("Audio playback error:", e);
   }
 };
 
 const playGlassChime = () => {
   try {
-    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+
     const t = ctx.currentTime;
 
     const osc = ctx.createOscillator();
@@ -60,7 +82,7 @@ const playGlassChime = () => {
     osc.start(t);
     osc.stop(t + 1.5);
   } catch (e) {
-    console.error(e);
+    console.error("Audio playback error:", e);
   }
 };
 
