@@ -45,26 +45,7 @@
    4. DECORATIVE HAND-DRAWN FRAME
    --------------------------------------------------------------------------- */
 
-/* An SVG-based border that wraps the entire hero section, giving the
-   impression of a hand-drawn picture frame sketched on the page. */
-.hero-section::before {
-  content: '';
-  position: absolute;
-  inset: 12px;
-  z-index: 5;
-  pointer-events: none;
 
-  border: 3px solid rgba(26, 26, 26, 0.12);
-  border-radius: 4px;
-
-  /* Hand-drawn frame via repeating SVG dash pattern */
-  background-image:
-    url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='2' width='99%25' height='99%25' fill='none' stroke='%231a1a1a' stroke-width='2' stroke-dasharray='12,8,4,8' stroke-dashoffset='0' stroke-linecap='round' rx='6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-
-  opacity: 0.18;
-}
 
 /* ---------------------------------------------------------------------------
    5. HERO CONTENT OVERLAY
@@ -76,10 +57,6 @@
   text-align: center;
   padding: 2rem;
   max-width: 800px;
-
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  border-radius: 12px;
 
   /* Animated entrance — starts invisible, animation fills forward */
   animation: heroFadeSlideUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;

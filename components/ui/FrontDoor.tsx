@@ -1,170 +1,170 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useUIStore } from '../../store/uiStore';
-import { 
-  BrickFacade, RoofStructure, GiantTree, StonePath, 
-  HangingSign, RightWindow, CatAndMailbox, GardenBed 
-} from './LandingProps';
+import { MinimalTree, MinimalGate } from './MinimalProps';
 
-const stickers = [
-  'JS', 'TS', 'React', 'Node', 'CSS', 'HTML', 'WebGL', 
-  'Three.js', 'GSAP', 'Next.js', 'Vite', 'Git', 'Figma', 'UI/UX', 'Startup'
-];
+export function FrontDoor({ children }: { children: React.ReactNode }) {
+  const [isEntered, setIsEntered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const setHasEntered = useUIStore(state => state.setHasEntered);
 
-export function FrontDoor() {
-  const [doorState, setDoorState] = useState<'ready' | 'doors-open' | 'opened'>('ready');
-  const [audioEnabled, setAudioEnabled] = useState(true);
+  const fadeInWhite = useUIStore(state => state.fadeInWhite);
+  const fadeOutWhite = useUIStore(state => state.fadeOutWhite);
 
-  // When component mounts, lock scroll if necessary
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, []);
-
-  const handleDoorClick = () => {
-    if (doorState !== 'ready') return;
-    
-    // Step 1: Swing doors open
-    setDoorState('doors-open');
-    
-    // Step 2: Zoom and split house apart
-    setTimeout(() => {
-      setDoorState('opened');
-    }, 800);
-    
-    // Step 3: Remove component / mark as entered
-    setTimeout(() => {
-      // For now we just let it stay in the DOM with visibility hidden or pointer-events none
-      // because the CSS handles the final state. But we could also unmount it via a global store.
-    }, 2000);
+  const playFlashSound = () => {
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const t = ctx.currentTime;
+      
+      // 1. White Noise burst
+      const bufferSize = ctx.sampleRate * 2; // 2 seconds
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      
+      // Filter the noise to make it sound like a deep "whoosh"
+      const noiseFilter = ctx.createBiquadFilter();
+      noiseFilter.type = 'lowpass';
+      noiseFilter.frequency.setValueAtTime(2000, t);
+      noiseFilter.frequency.exponentialRampToValueAtTime(100, t + 1.5);
+      
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0, t);
+      noiseGain.gain.linearRampToValueAtTime(1, t + 0.05);
+      noiseGain.gain.exponentialRampToValueAtTime(0.01, t + 1.5);
+      
+      noise.connect(noiseFilter);
+      noiseFilter.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+      
+      // 2. Deep impact synth
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(200, t);
+      osc.frequency.exponentialRampToValueAtTime(40, t + 1);
+      
+      const oscGain = ctx.createGain();
+      oscGain.gain.setValueAtTime(0, t);
+      oscGain.gain.linearRampToValueAtTime(1, t + 0.05);
+      oscGain.gain.exponentialRampToValueAtTime(0.01, t + 1.5);
+      
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      
+      // Play
+      noise.start(t);
+      noise.stop(t + 2);
+      osc.start(t);
+      osc.stop(t + 2);
+    } catch (e) {
+      console.error("Audio playback failed", e);
+    }
   };
 
-  const toggleAudio = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setAudioEnabled(!audioEnabled);
+  const handleClick = () => {
+    // 1. Play the synthesized flash sound
+    playFlashSound();
+
+    // 2. Instantly trigger the bright white flash
+    fadeInWhite();
+    
+    // 3. Wait for the flash to cover the screen
+    setTimeout(() => {
+      setIsEntered(true);
+      setHasEntered(true);
+      
+      if (typeof document !== 'undefined') {
+        document.dispatchEvent(new CustomEvent('preloaderComplete'));
+      }
+      
+      // 4. Slowly fade out the white flash to reveal the corridor
+      setTimeout(() => {
+        fadeOutWhite();
+      }, 300);
+    }, 200);
   };
-
-  // Build the class list based on state
-  let classNames = "house-landing ready";
-  if (doorState === 'doors-open') {
-    classNames = "house-landing doors-open";
-  } else if (doorState === 'opened') {
-    classNames = "house-landing doors-open zooming opened";
-  }
-
-  // If it's completely opened, we could hide it entirely to free up DOM,
-  // but the CSS handles `pointer-events: none` and moves elements off screen.
-  
-  // Pre-calculate sticker positions so they don't jump on re-render
-  const leftStickers = useMemo(() => stickers.slice(0, 7).map((text, i) => ({
-    text,
-    top: 30 + Math.random() * 50 + '%',
-    left: 20 + Math.random() * 60 + '%',
-    rotate: (Math.random() - 0.5) * 40 + 'deg',
-    scale: 0.8 + Math.random() * 0.4
-  })), []);
-
-  const rightStickers = useMemo(() => stickers.slice(7).map((text, i) => ({
-    text,
-    top: 30 + Math.random() * 50 + '%',
-    left: 20 + Math.random() * 60 + '%',
-    rotate: (Math.random() - 0.5) * 40 + 'deg',
-    scale: 0.8 + Math.random() * 0.4
-  })), []);
 
   return (
-    <div 
-      className={classNames} 
-      id="house-landing" 
-      aria-label="Enter Portfolio"
-      onClick={handleDoorClick}
-    >
-      {/* LEFT HALF */}
-      <div className="house-half house-half--left">
-        {/* Full-spanning elements clipped to left half */}
-        <div style={{ position: 'absolute', width: '200%', height: '100%', left: 0, clipPath: 'inset(0 50% 0 0)' }}>
-          <BrickFacade />
-          <RoofStructure />
-          <StonePath />
-          <HangingSign />
-        </div>
-        
-        {/* Left Side Specific Elements (Tree, Mailbox) */}
-        <GiantTree />
-        <CatAndMailbox />
-        
-        <div className="house-door house-door--left">
-          {leftStickers.map((st, i) => (
-            <div key={i} style={{
-              position: 'absolute', top: st.top, left: st.left, 
-              transform: `rotate(${st.rotate}) scale(${st.scale})`,
-              border: '2px solid #1a1a1a', background: '#fff', 
-              padding: '2px 6px', fontWeight: 'bold', fontSize: '0.8rem',
-              fontFamily: 'monospace', zIndex: 20,
-              boxShadow: '1px 1px 0 rgba(0,0,0,0.1)'
-            }}>
-              {st.text}
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* RIGHT HALF */}
-      <div className="house-half house-half--right">
-        {/* Full-spanning elements clipped to right half */}
-        <div style={{ position: 'absolute', width: '200%', height: '100%', left: '-100%', clipPath: 'inset(0 0 0 50%)' }}>
-          <BrickFacade />
-          <RoofStructure />
-          <StonePath />
-          <HangingSign />
-        </div>
-
-        {/* Right Side Specific Elements (Window, Garden) */}
-        <RightWindow />
-        <GardenBed />
-
-        <div className="house-door house-door--right">
-          {rightStickers.map((st, i) => (
-            <div key={i} style={{
-              position: 'absolute', top: st.top, left: st.left, 
-              transform: `rotate(${st.rotate}) scale(${st.scale})`,
-              border: '2px solid #1a1a1a', background: '#fff', 
-              padding: '2px 6px', fontWeight: 'bold', fontSize: '0.8rem',
-              fontFamily: 'monospace', zIndex: 20,
-              boxShadow: '1px 1px 0 rgba(0,0,0,0.1)'
-            }}>
-              {st.text}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="house-overlay" id="house-overlay">
-        <div className="house-enter-text" id="house-enter-text">
-          EXPLORER<br/>
-          <span style={{fontSize: '1rem', fontWeight: 'normal'}}>
-            Click a door to enter. Audio is currently 
-            <button 
-              onClick={toggleAudio}
+    <>
+      <AnimatePresence>
+        {!isEntered && (
+          <motion.div
+            key="door-overlay"
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 99999, // ensures it sits above everything
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#f5f5f5', // light background for the drawing
+              cursor: 'pointer'
+            }}
+            exit={{ 
+              backgroundColor: '#ffffff',
+              opacity: 0 
+            }}
+            transition={{ 
+              backgroundColor: { duration: 0.1 }, // flash to pure white
+              opacity: { delay: 0.1, duration: 1.5, ease: "easeOut" } // then slow fade out
+            }}
+            onClick={handleClick}
+          >
+            <motion.div 
               style={{
-                background: 'none', 
-                border: 'none', 
-                cursor: 'pointer', 
-                fontWeight: 'bold', 
-                textDecoration: 'underline',
-                fontFamily: 'inherit',
-                fontSize: 'inherit',
-                color: 'inherit',
-                padding: '0 5px'
+                display: 'flex',
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+                gap: '2rem',
+                width: '100%',
+                maxWidth: '800px',
+                height: '300px'
+              }}
+              animate={{ filter: isHovered ? 'brightness(0.6)' : 'brightness(1)' }}
+              transition={{ duration: 0.3 }}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              onTouchStart={() => setIsHovered(true)}
+              onTouchEnd={() => setIsHovered(false)}
+            >
+              <div style={{ flex: 1, height: '100%' }}>
+                <MinimalTree />
+              </div>
+              <div style={{ flex: 1, height: '100%', pointerEvents: 'none' }}>
+                <MinimalGate />
+              </div>
+              <div style={{ flex: 1, height: '100%' }}>
+                <MinimalTree />
+              </div>
+            </motion.div>
+            
+            <motion.p 
+              animate={{ filter: isHovered ? 'brightness(0.6)' : 'brightness(1)' }}
+              transition={{ duration: 0.3 }}
+              style={{
+                marginTop: '3rem',
+                color: '#1a1a1a',
+                fontFamily: "'Inter', sans-serif",
+                letterSpacing: '0.1em',
+                fontWeight: 600,
+                opacity: 0.8
               }}
             >
-              [{audioEnabled ? '🔊 ON' : '🔈 OFF'}]
-            </button>
-          </span>
-        </div>
-      </div>
-    </div>
+              CLICK TO ENTER
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {children}
+    </>
   );
 }

@@ -12,16 +12,10 @@ export default function SystemOrchestrator() {
   return (
     <>
       {/* 
-        The LandingPage is rendered until the transition completes.
-        Once completed, it completely unmounts. 
+        The Experience (Corridor) now mounts immediately.
+        The external FrontDoor handles the landing transition.
       */}
-      {!isCorridorActive && <LandingPage />}
-
-      {/* 
-        The Experience (Corridor) only mounts and takes control
-        after the landing transition has completely finished.
-      */}
-      {isCorridorActive && <Experience />}
+      <Experience />
     </>
   );
 }

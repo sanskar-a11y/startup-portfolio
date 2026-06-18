@@ -1,11 +1,24 @@
-import MountToggle from '../components/experience/MountToggle';
+"use client";
+
+import React from 'react';
 import { Overlay } from '../components/ui/Overlay';
+import MountToggle from '../components/experience/MountToggle';
+import { motion } from 'framer-motion';
+import { FrontDoor } from '../components/ui/FrontDoor';
+
+const displayBlock: React.CSSProperties = { display: 'block' };
+const displayNone: React.CSSProperties = { display: 'none' };
+const visuallyHiddenStyle: React.CSSProperties = { position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 };
+const noscriptStyle: React.CSSProperties = { padding: '2rem', textAlign: 'center', fontFamily: "'Inter', sans-serif", color: '#1a1a1a', background: '#fafafa' };
+const ulStyle: React.CSSProperties = { listStyle: 'none', padding: 0 };
 
 export default function Home() {
+
   return (
     <>
       <Overlay />
       <MountToggle />
+
 
       {/* SEO FALLBACK CONTENT */}
       <div className="sr-only-seo" hidden aria-hidden="true">
@@ -65,15 +78,16 @@ export default function Home() {
       </div>
 
 
+      <FrontDoor>
       {/* MAIN APP WRAPPER */}
       <div className="app" id="app">
         {/* WebGL Background Canvas */}
         <canvas id="webgl-canvas" aria-hidden="true"></canvas>
 
         {/* NAVIGATION UI */}
-        <nav className="navigation-ui" id="navigation-ui" aria-label="Site controls" style={{ display: 'none' }}>
+        <nav className="navigation-ui" id="navigation-ui" aria-label="Site controls" style={displayBlock}>
           {/* Back Button */}
-          <button className="nav-btn back-btn" id="back-btn" aria-label="Go back" style={{ display: 'none' }}>
+          <button className="nav-btn back-btn" id="back-btn" aria-label="Go back" style={displayNone}>
             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
@@ -90,30 +104,10 @@ export default function Home() {
               </div>
             </button>
           </div>
-
-          {/* AUDIO SETTINGS */}
-          <div className="audio-settings" id="audio-settings">
-            <div className="audio-header">
-              <h3>AUDIO SETTINGS</h3>
-              <button className="audio-close" aria-label="Close audio settings">×</button>
-            </div>
-            <div className="audio-sliders">
-              <div className="audio-slider-group">
-                <label htmlFor="music-slider">Music</label>
-                <span className="audio-value">0%</span>
-                <input type="range" id="music-slider" min="0" max="100" defaultValue="0" />
-              </div>
-              <div className="audio-slider-group">
-                <label htmlFor="sfx-slider">SFX</label>
-                <span className="audio-value">0%</span>
-                <input type="range" id="sfx-slider" min="0" max="100" defaultValue="0" />
-              </div>
-            </div>
-          </div>
         </nav>
 
         {/* MENU OVERLAY */}
-        <div className="menu-overlay" id="menu-overlay" style={{ display: 'none' }} role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
+        <div className="menu-overlay" id="menu-overlay" style={displayNone} role="dialog" aria-modal="true" aria-label="Navigation menu" aria-hidden="true">
           <div className="menu-overlay__content">
             <nav className="menu-overlay__nav" aria-label="Main navigation">
               <a href="#hero" className="menu-overlay__link" data-section="hero">The Corridor</a>
@@ -149,33 +143,25 @@ export default function Home() {
         </div>
 
         {/* CONTENT SECTIONS */}
-        <main className="main-content" id="main-content" style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+        <main 
+          className="main-content" 
+          id="main-content" 
+          style={displayBlock}
+        >
           {/* HERO / CORRIDOR SECTION */}
           <section className="hero-section" id="hero" aria-label="Welcome – The Corridor">
-            <div className="hero__content">
-              <div className="hero__badge" role="group" aria-label="Role">CREATIVE DEVELOPER</div>
-              <h1 className="hero__title">
-                Tomasz<br />
-                <span className="hero__title-accent">&quot;ITom&quot;</span><br />
-                Szmajda
-              </h1>
-              <p className="hero__subtitle">Interactive 3D Developer Portfolio</p>
-              <p className="hero__tagline">Explore WebGL experiments, React projects &amp; GSAP animations in a hand-drawn gallery.</p>
-            </div>
 
-            <div className="hero__scroll-hint" id="scroll-hint" aria-hidden="true">
+
+            <motion.div 
+              className="hero__scroll-hint" 
+              id="scroll-hint" 
+              aria-hidden="true"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 1 }}
+            >
               <span className="hero__scroll-text">Scroll to explore</span>
-              <span className="hero__scroll-arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 5v14M19 12l-7-7-7-7" />
-                </svg>
-              </span>
-            </div>
-
-            <div className="entrance-hint" id="entrance-hint" style={{ display: 'none' }} aria-hidden="true">
-              <span>🖱️ Scroll to navigate</span>
-              <span>🗺️ Open map for overview</span>
-            </div>
+            </motion.div>
           </section>
 
           {/* GALLERY / PROJECTS SECTION */}
@@ -366,14 +352,15 @@ export default function Home() {
           </section>
         </main>
       </div>
+      </FrontDoor>
 
       {/* Noscript Fallback */}
       <noscript>
-        <div style={{ padding: '2rem', textAlign: 'center', fontFamily: "'Inter', sans-serif", color: '#1a1a1a', background: '#fafafa' }}>
+        <div style={noscriptStyle}>
           <h2>JavaScript Required</h2>
           <p>This portfolio uses JavaScript for interactive 3D experiences, animations, and navigation. Please enable JavaScript in your browser to explore the full portfolio.</p>
           <p>You can still reach me at:</p>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
+          <ul style={ulStyle}>
             <li><a href="https://www.linkedin.com/in/tomasz-szmajda-259337305/">LinkedIn</a></li>
             <li><a href="https://github.com/ITomPoland">GitHub</a></li>
             <li><a href="https://www.instagram.com/itom.dev/">Instagram</a></li>

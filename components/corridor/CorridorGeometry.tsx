@@ -168,18 +168,9 @@ export function CorridorGeometry({ numSegments, rooms, onSegmentsReady }: Corrid
       <mesh geometry={wallGeo} material={wallMaterial} rotation={[0, -Math.PI / 2, 0]} position={[CORRIDOR_WIDTH / 2, CORRIDOR_HEIGHT / 2, 0]} />
       <lineSegments geometry={wallEdgesGeo} material={sketchyLineMaterial} rotation={[0, -Math.PI / 2, 0]} position={[CORRIDOR_WIDTH / 2, CORRIDOR_HEIGHT / 2, 0]} />
 
-      {/* Door Content Group */}
+      {/* Door Content Group Removed as per user request */}
       <group name="contentGroup" userData={{ roomConfig: rooms[i] }}>
-        <DoorGeometry 
-          roomConfig={rooms[i]} 
-          side={i % 2 === 0 ? 'left' : 'right'} 
-          sharedDoorGeo={sharedDoorGeo}
-          sharedTrimSideGeo={sharedTrimSideGeo}
-          sharedTrimTopGeo={sharedTrimTopGeo}
-          sharedDarkRecessGeo={sharedDarkRecessGeo}
-          sharedLabelGeo={sharedLabelGeo}
-          doorPaperTexture={doorTexture}
-        />
+        {/* <DoorGeometry /> was here */}
         <WallDecorations segmentIndex={i} />
       </group>
     </group>

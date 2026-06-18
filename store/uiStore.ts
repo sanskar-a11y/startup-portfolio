@@ -9,6 +9,8 @@ interface UIState {
   fadeInWhite: () => void;
   fadeOutWhite: () => void;
   setFinaleZ: (z: number | null) => void;
+  hasEntered: boolean;
+  setHasEntered: (entered: boolean) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -19,7 +21,9 @@ export const useUIStore = create<UIState>((set) => ({
   fadeOut: () => set({ overlayVisible: false }),
   fadeInWhite: () => set({ whiteOverlayVisible: true }),
   fadeOutWhite: () => set({ whiteOverlayVisible: false }),
-  setFinaleZ: (z) => set({ finaleZ: z })
+  setFinaleZ: (z) => set({ finaleZ: z }),
+  hasEntered: false,
+  setHasEntered: (entered) => set({ hasEntered: entered })
 }));
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
