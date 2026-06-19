@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUIStore } from '../../store/uiStore';
-import { DetailedSketchTree, DetailedInteractiveHouse } from './MinimalProps';
+import { PortfolioSketchScene } from './MinimalProps';
 
 export function FrontDoor({ children }: { children: React.ReactNode }) {
   const [isEntered, setIsEntered] = useState(false);
@@ -125,27 +125,20 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
             <motion.div 
               style={{
                 display: 'flex',
-                alignItems: 'flex-end',
+                alignItems: 'center',
                 justifyContent: 'center',
-                gap: '2rem',
                 width: '100%',
-                maxWidth: '1000px',
-                height: '450px',
-                zIndex: 1
+                maxWidth: '1200px',
+                aspectRatio: '1000/600',
+                zIndex: 1,
+                cursor: 'pointer'
               }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: "easeOut" }}
+              onClick={handleClick}
             >
-              {/* Left Side: The single detailed tree */}
-              <div style={{ flex: 1, height: '80%', maxWidth: '300px' }}>
-                <DetailedSketchTree />
-              </div>
-              
-              {/* Right Side: The Interactive Detailed House */}
-              <div style={{ flex: 1.5, height: '100%', maxWidth: '600px' }} onClick={handleClick}>
-                <DetailedInteractiveHouse />
-              </div>
+              <PortfolioSketchScene />
             </motion.div>
             
             {/* Elegant Typography */}
