@@ -13,11 +13,13 @@ function pseudoRandom(seed: number) {
 
 // Global hard limits (from user JSON)
 const hardLimits: Record<string, number> = {
-  small_table: 3,
-  mirror: 2,
-  plant_vase: 4,
-  wall_clock: 2,
-  coat_stand: 1
+  small_table: 10,
+  mirror: 5,
+  plant_vase: 12,
+  wall_clock: 5,
+  coat_stand: 4,
+  tree: 10,
+  character: 10
 };
 
 export function WallDecorations({ segmentIndex }: WallDecorationsProps) {
@@ -35,14 +37,8 @@ export function WallDecorations({ segmentIndex }: WallDecorationsProps) {
     for (let i = 0; i <= segmentIndex; i++) {
       const seed = i * 2026;
       
-      // 40% empty space rule
-      if (pseudoRandom(seed) < 0.40) {
-        if (i === segmentIndex) return []; // Render nothing for this segment
-        continue;
-      }
-
-      // Max 1 to 3 props per section
-      const numProps = Math.floor(pseudoRandom(seed + 1) * 3) + 1;
+      // Max 3 to 7 props per section to make it dense
+      const numProps = Math.floor(pseudoRandom(seed + 1) * 5) + 3;
       
       for (let p = 0; p < numProps; p++) {
         const propSeed = seed + 10 + p;

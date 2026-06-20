@@ -136,29 +136,44 @@ export const TexturedInteractiveDoor = ({
 
         {/* --- DOOR DETAILS END --- */}
         
-        <g fill={doorHovered ? "rgba(0,0,0,0.6)" : inkColor}>
-          <rect x="25" y="40" width="30" height="30" rx="4" fill="none" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} strokeWidth="1.5" />
-          <path d="M35 65 L45 65" strokeWidth="2" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} />
-          <text x="40" y="58" fontFamily="'Inter', sans-serif" fontSize="14" fontWeight="bold" textAnchor="middle">JS</text>
-        </g>
-        
-        <g fill={doorHovered ? "rgba(0,0,0,0.6)" : inkColor}>
-          <rect x="105" y="40" width="30" height="30" rx="4" fill="none" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} strokeWidth="1.5" />
-          <path d="M115 65 L125 65" strokeWidth="2" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} />
-          <text x="120" y="58" fontFamily="'Inter', sans-serif" fontSize="14" fontWeight="bold" textAnchor="middle">TS</text>
-        </g>
+        {/* Anime Sketch Character Drawing on the door */}
+        <g stroke={inkColor} strokeWidth="0.8" fill="none" opacity="0.85">
+          {/* Face and Hair */}
+          <path d="M 65 100 Q 80 120 95 100" /> {/* Chin */}
+          <path d="M 55 60 Q 80 40 105 60 Q 115 80 110 110 Q 100 140 90 150" /> {/* Hair Right */}
+          <path d="M 55 60 Q 45 80 50 110 Q 60 140 70 150" /> {/* Hair Left */}
+          <path d="M 55 60 Q 70 80 75 75 Q 85 95 90 75 Q 100 85 105 60" /> {/* Bangs */}
+          
+          {/* Eyes & Features */}
+          <path d="M 65 85 Q 70 82 75 85" strokeWidth="1" /> {/* L Eye closed */}
+          <path d="M 85 85 Q 90 82 95 85" strokeWidth="1" /> {/* R Eye closed */}
+          <path d="M 80 92 Q 80 94 82 92" strokeWidth="0.5" /> {/* Nose/Mouth */}
 
-        <g fill={doorHovered ? "rgba(0,0,0,0.6)" : inkColor}>
-          <circle cx="40" cy="225" r="15" fill="none" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} strokeWidth="1.5" />
-          <ellipse cx="40" cy="225" rx="12" ry="4" fill="none" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} strokeWidth="1" transform="rotate(30 40 225)" />
-          <ellipse cx="40" cy="225" rx="12" ry="4" fill="none" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} strokeWidth="1" transform="rotate(-30 40 225)" />
-          <ellipse cx="40" cy="225" rx="12" ry="4" fill="none" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} strokeWidth="1" transform="rotate(90 40 225)" />
-          <circle cx="40" cy="225" r="2" />
-        </g>
-        
-        <g fill={doorHovered ? "rgba(0,0,0,0.6)" : inkColor}>
-          <rect x="105" y="210" width="30" height="30" rx="4" fill="none" stroke={doorHovered ? "rgba(0,0,0,0.6)" : inkColor} strokeWidth="1.5" />
-          <text x="120" y="230" fontFamily="'Inter', sans-serif" fontSize="16" fontWeight="bold" textAnchor="middle">css</text>
+          {/* Shoulders and Dress */}
+          <path d="M 70 110 Q 55 120 40 160 L 35 240" /> {/* L Shoulder */}
+          <path d="M 90 110 Q 105 120 120 160 L 125 240" /> {/* R Shoulder */}
+          
+          {/* Scarf / Collar */}
+          <path d="M 60 115 Q 80 130 100 115" />
+          <path d="M 70 120 Q 80 140 85 125" />
+          <path d="M 90 120 Q 80 140 75 125" />
+
+          {/* Dress folds */}
+          <path d="M 50 160 Q 60 200 50 240" />
+          <path d="M 110 160 Q 100 200 110 240" />
+          <path d="M 80 140 L 80 240" strokeWidth="0.4" />
+          
+          {/* Companion creature (like a mini-Totoro) on shoulder */}
+          <path d="M 105 130 C 105 110, 125 110, 125 130 C 130 145, 100 145, 105 130 Z" />
+          <path d="M 108 115 L 110 105 L 114 113" strokeWidth="0.5" /> {/* Ear */}
+          <path d="M 122 115 L 120 105 L 116 113" strokeWidth="0.5" /> {/* Ear */}
+          <circle cx="112" cy="120" r="1" fill={inkColor} />
+          <circle cx="118" cy="120" r="1" fill={inkColor} />
+
+          {/* Sketchy shading/hatching */}
+          <path d="M 45 140 L 55 145 M 42 150 L 52 155 M 40 160 L 50 165" strokeWidth="0.4" />
+          <path d="M 115 140 L 105 145 M 118 150 L 108 155 M 120 160 L 110 165" strokeWidth="0.4" />
+          <path d="M 55 70 L 60 65 M 60 75 L 65 70 M 95 70 L 90 65 M 90 75 L 85 70" strokeWidth="0.4" />
         </g>
       </g>
     </>

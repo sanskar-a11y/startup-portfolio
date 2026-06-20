@@ -195,6 +195,57 @@ function createLamp(): PropMesh[] {
 // Registry Initialization
 // ------------------------------------------------------------------
 
+function createTree(): PropMesh[] {
+  const meshes: PropMesh[] = [];
+  const trunkGeo = new THREE.CylinderGeometry(0.2, 0.3, 1.5, 6);
+  meshes.push({ geometry: trunkGeo, position: [0, 0.75, 0] });
+  meshes.push({ geometry: new THREE.EdgesGeometry(trunkGeo), position: [0, 0.75, 0], isEdges: true });
+  
+  for (let i = 0; i < 15; i++) {
+    const s = 0.5 + pseudoRandom(i) * 0.8;
+    const boxGeo = new THREE.BoxGeometry(s, s, s);
+    const pos = [
+      (pseudoRandom(i+10) - 0.5) * 1.5,
+      1.5 + pseudoRandom(i+20) * 1.5,
+      (pseudoRandom(i+30) - 0.5) * 1.5
+    ] as [number, number, number];
+    const rot = [
+      pseudoRandom(i+40) * Math.PI,
+      pseudoRandom(i+50) * Math.PI,
+      pseudoRandom(i+60) * Math.PI
+    ] as [number, number, number];
+    meshes.push({ geometry: boxGeo, position: pos, rotation: rot });
+    meshes.push({ geometry: new THREE.EdgesGeometry(boxGeo), position: pos, rotation: rot, isEdges: true });
+  }
+  return meshes;
+}
+
+function createCharacter(): PropMesh[] {
+  const meshes: PropMesh[] = [];
+  const headGeo = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+  meshes.push({ geometry: headGeo, position: [0, 1.6, 0] });
+  meshes.push({ geometry: new THREE.EdgesGeometry(headGeo), position: [0, 1.6, 0], isEdges: true });
+  
+  const bodyGeo = new THREE.BoxGeometry(0.4, 0.6, 0.2);
+  meshes.push({ geometry: bodyGeo, position: [0, 1.1, 0] });
+  meshes.push({ geometry: new THREE.EdgesGeometry(bodyGeo), position: [0, 1.1, 0], isEdges: true });
+  
+  const armGeo = new THREE.BoxGeometry(0.1, 0.6, 0.1);
+  meshes.push({ geometry: armGeo, position: [-0.3, 1.1, 0], rotation: [0, 0, 0.2] });
+  meshes.push({ geometry: new THREE.EdgesGeometry(armGeo), position: [-0.3, 1.1, 0], rotation: [0, 0, 0.2], isEdges: true });
+  meshes.push({ geometry: armGeo, position: [0.3, 1.1, 0], rotation: [0, 0, -0.2] });
+  meshes.push({ geometry: new THREE.EdgesGeometry(armGeo), position: [0.3, 1.1, 0], rotation: [0, 0, -0.2], isEdges: true });
+
+  const legGeo = new THREE.BoxGeometry(0.15, 0.8, 0.15);
+  meshes.push({ geometry: legGeo, position: [-0.1, 0.4, 0] });
+  meshes.push({ geometry: new THREE.EdgesGeometry(legGeo), position: [-0.1, 0.4, 0], isEdges: true });
+  meshes.push({ geometry: legGeo, position: [0.1, 0.4, 0] });
+  meshes.push({ geometry: new THREE.EdgesGeometry(legGeo), position: [0.1, 0.4, 0], isEdges: true });
+  
+  return meshes;
+}
+
+
 let templates: PropTemplate[] | null = null;
 
 export function getPropTemplates(): PropTemplate[] {
@@ -222,6 +273,10 @@ export function getPropTemplates(): PropTemplate[] {
       { geometry: new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.5, 0.5, 0.1, 16)), position: [0,0,0], rotation: [Math.PI/2,0,0], isEdges: true }
     ], width: 1, height: 1, depth: 0.1, ySnap: 'wall'
   });
+  templates.push({
+    id: 'arch_tree', category: 'tree', type: 'architectural',
+    meshes: createTree(), width: 2, height: 3.5, depth: 2, ySnap: 'floor'
+  });
 
   // RARE
   templates.push({
@@ -242,6 +297,10 @@ export function getPropTemplates(): PropTemplate[] {
   templates.push({
     id: 'rare_lamp', category: 'lamp', type: 'rare',
     meshes: createLamp(), width: 0.4, height: 0.8, depth: 0.4, ySnap: 'table'
+  });
+  templates.push({
+    id: 'rare_character', category: 'character', type: 'rare',
+    meshes: createCharacter(), width: 0.8, height: 1.8, depth: 0.4, ySnap: 'floor'
   });
 
   // PORTFOLIO STORYTELLING (2D Canvas textures mounted on thin frames)

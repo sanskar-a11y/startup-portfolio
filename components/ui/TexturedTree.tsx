@@ -56,8 +56,14 @@ export const TexturedTree = ({ inkColor, shadowColor }: { inkColor: string, shad
         <path d="M260 270 Q 300 230 350 200" fill="none" stroke={inkColor} strokeWidth="0.8" />
         <path d="M200 220 Q 220 150 200 50" fill="none" stroke={inkColor} strokeWidth="1" />
 
-        {/* --- Denser Canopy Layers --- */}
+        {/* Hanging Mouse */}
+        <motion.g whileHover={{ rotate: [0, 8, -6, 3, 0] }} transition={{ duration: 2, ease: "easeInOut" }} style={{ transformOrigin: "280px 250px", cursor: "pointer" }}>
+          <path d="M280 250 C 290 320, 280 380, 290 450" fill="none" stroke={inkColor} strokeWidth="1" />
+          <rect x="270" y="450" width="40" height="60" rx="20" fill="#ffffff" stroke={inkColor} strokeWidth="1" />
+          <path d="M290 450 L290 475" stroke={inkColor} strokeWidth="1" />
+        </motion.g>
 
+        {/* --- Denser Canopy Layers --- */}
         {/* Back Layer */}
         <path d="M 10 150 C 10 50, 100 -20, 200 0 C 300 -20, 390 50, 390 150 C 450 200, 350 300, 250 250 C 200 300, 100 300, 50 250 C -50 250, -50 150, 10 150 Z" fill="#ffffff" stroke={inkColor} strokeWidth="1" />
         
@@ -169,12 +175,7 @@ export const TexturedTree = ({ inkColor, shadowColor }: { inkColor: string, shad
         ))}
       </g>
 
-      {/* Hanging Mouse */}
-      <motion.g whileHover={{ rotate: [0, 8, -6, 3, 0] }} transition={{ duration: 2, ease: "easeInOut" }} style={{ transformOrigin: "280px 250px", cursor: "pointer" }} filter="url(#soft-shadow)">
-        <path d="M280 250 C 290 320, 280 380, 290 450" fill="none" stroke={inkColor} strokeWidth="1" />
-        <rect x="270" y="450" width="40" height="60" rx="20" fill="#ffffff" stroke={inkColor} strokeWidth="1" />
-        <path d="M290 450 L290 475" stroke={inkColor} strokeWidth="1" />
-      </motion.g>
+
 
       {/* Cat */}
       <g transform="translate(350, 460)">

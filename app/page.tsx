@@ -23,7 +23,7 @@ export default function Home() {
       {/* SEO FALLBACK CONTENT */}
       <div className="sr-only-seo" hidden aria-hidden="true">
         <header>
-          <h1>Tomasz &quot;ITom&quot; Szmajda – Creative Frontend Developer Portfolio</h1>
+          <h1>Portfolio – Creative Frontend Developer Portfolio</h1>
           <p>Interactive 3D developer portfolio showcasing WebGL experiments, React projects, and GSAP animations in a hand-drawn gallery experience.</p>
         </header>
 
@@ -57,7 +57,7 @@ export default function Home() {
           </section>
 
           <section>
-            <h2>About Tomasz &quot;ITom&quot; Szmajda</h2>
+            <h2>About Portfolio</h2>
             <p>Dedicated Frontend Developer with a profound specialization in interactive web experiences. Core skills include JavaScript (ES6+), TypeScript, React.js, Next.js, Three.js, React Three Fiber, GSAP, Framer Motion, Node.js, and Figma.</p>
           </section>
 
@@ -65,15 +65,15 @@ export default function Home() {
             <h2>Contact</h2>
             <p>Looking to hire a passionate developer or seeking a specialist for a 3D WebGL vision? Get in touch.</p>
             <ul>
-              <li><a href="https://www.linkedin.com/in/tomasz-szmajda-259337305/">LinkedIn</a></li>
-              <li><a href="https://github.com/ITomPoland">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/portfolio/">LinkedIn</a></li>
+              <li><a href="https://github.com/PortfolioPoland">GitHub</a></li>
               <li><a href="https://www.instagram.com/itom.dev/">Instagram</a></li>
             </ul>
           </section>
         </div>
 
         <footer>
-          <p>Designed &amp; built with love by ITom &middot; 2026</p>
+          <p>Designed &amp; built with love by Portfolio &middot; 2026</p>
         </footer>
       </div>
 
@@ -116,7 +116,7 @@ export default function Home() {
               <a href="#contact" className="menu-overlay__link" data-section="contact">Contact</a>
             </nav>
             <div className="menu-overlay__socials">
-              <a href="https://www.linkedin.com/in/tomasz-szmajda-259337305/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+              <a href="https://www.linkedin.com/in/portfolio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z" />
                   <rect x="2" y="9" width="4" height="12" />
@@ -124,7 +124,7 @@ export default function Home() {
                 </svg>
                 <span>LinkedIn</span>
               </a>
-              <a href="https://github.com/ITomPoland" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+              <a href="https://github.com/PortfolioPoland" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
                 </svg>
@@ -246,13 +246,13 @@ export default function Home() {
             <div className="about__container">
               <header className="about__header">
                 <h2 className="about__title">The Studio</h2>
-                <p className="about__subtitle">About Tomasz &quot;ITom&quot; Szmajda</p>
+                <p className="about__subtitle">About Portfolio</p>
                 <hr className="about__divider" aria-hidden="true" />
               </header>
 
               <div className="about__card studio-paper-card" data-animate>
                 <p className="about__intro">
-                  My name is <strong>Tomasz Szmajda</strong> (ITom), and I am a dedicated Frontend Developer with a profound specialization in interactive web experiences. My journey in software engineering began with a fascination for how logic and aesthetics intertwine.
+                  My name is <strong>Portfolio</strong> (Portfolio), and I am a dedicated Frontend Developer with a profound specialization in interactive web experiences. My journey in software engineering began with a fascination for how logic and aesthetics intertwine.
                 </p>
 
                 <hr className="about__divider-line" aria-hidden="true" />
@@ -278,7 +278,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <a href="https://github.com/ITomPoland" target="_blank" rel="noopener noreferrer" className="about__cta studio-action-button">
+                <a href="https://github.com/PortfolioPoland" target="_blank" rel="noopener noreferrer" className="about__cta studio-action-button">
                   View GitHub Profile
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
@@ -323,14 +323,14 @@ export default function Home() {
                 </form>
 
                 <div className="contact__socials" role="group" aria-label="Social media links">
-                  <a href="https://www.linkedin.com/in/tomasz-szmajda-259337305/" target="_blank" rel="noopener noreferrer" className="contact__social-link" aria-label="LinkedIn profile">
+                  <a href="https://www.linkedin.com/in/portfolio/" target="_blank" rel="noopener noreferrer" className="contact__social-link" aria-label="LinkedIn profile">
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z" />
                       <rect x="2" y="9" width="4" height="12" />
                       <circle cx="4" cy="4" r="2" />
                     </svg>
                   </a>
-                  <a href="https://github.com/ITomPoland" target="_blank" rel="noopener noreferrer" className="contact__social-link" aria-label="GitHub profile">
+                  <a href="https://github.com/PortfolioPoland" target="_blank" rel="noopener noreferrer" className="contact__social-link" aria-label="GitHub profile">
                     <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
                     </svg>
@@ -346,7 +346,7 @@ export default function Home() {
               </div>
 
               <footer className="contact__footer">
-                <p>Designed &amp; built with <span aria-label="love">❤️</span> by ITom &middot; <time dateTime="2026">2026</time></p>
+                <p>Designed &amp; built with <span aria-label="love">❤️</span> by Portfolio &middot; <time dateTime="2026">2026</time></p>
               </footer>
             </div>
           </section>
@@ -361,8 +361,8 @@ export default function Home() {
           <p>This portfolio uses JavaScript for interactive 3D experiences, animations, and navigation. Please enable JavaScript in your browser to explore the full portfolio.</p>
           <p>You can still reach me at:</p>
           <ul style={ulStyle}>
-            <li><a href="https://www.linkedin.com/in/tomasz-szmajda-259337305/">LinkedIn</a></li>
-            <li><a href="https://github.com/ITomPoland">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/portfolio/">LinkedIn</a></li>
+            <li><a href="https://github.com/PortfolioPoland">GitHub</a></li>
             <li><a href="https://www.instagram.com/itom.dev/">Instagram</a></li>
           </ul>
         </div>

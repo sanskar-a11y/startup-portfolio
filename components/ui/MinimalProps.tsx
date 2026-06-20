@@ -2,11 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion } from "framer-motion";
-import { TexturedTree } from './TexturedTree';
-import { TexturedArchitecture } from './TexturedArchitecture';
 import { TexturedInteractiveDoor } from './TexturedInteractiveDoor';
 
-// Shared AudioContext to handle browser autoplay policies
 let audioCtx: AudioContext | null = null;
 
 const getAudioContext = () => {
@@ -83,10 +80,8 @@ export const PortfolioSketchScene = ({ className }: { className?: string }) => {
   const [doorHovered, setDoorHovered] = useState(false);
   const [windowHovered, setWindowHovered] = useState(false);
 
-  // Original Color Palette
   const inkColor = "#1a1a1a";
   const paperColor = "transparent";
-  const shadowColor = "rgba(0,0,0,0.05)";
 
   return (
     <motion.svg
@@ -99,57 +94,56 @@ export const PortfolioSketchScene = ({ className }: { className?: string }) => {
       animate={ sceneHovered ? { y: [-5, 5] } : { y: 0 } }
       transition={ sceneHovered ? { duration: 4, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" } : { duration: 0.5, ease: "easeOut" } }
     >
-      <defs>
-        <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
-          <feDropShadow dx="0" dy="5" stdDeviation="5" floodOpacity="0.1" />
-        </filter>
-
-        <linearGradient id="door-watercolor" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#faedcd"/>
-          <stop offset="50%" stopColor="#d4a373"/>
-          <stop offset="100%" stopColor="#ccd5ae"/>
-        </linearGradient>
-
-        <linearGradient id="door-sketch" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(0,0,0,0.02)"/>
-          <stop offset="100%" stopColor="rgba(0,0,0,0.05)"/>
-        </linearGradient>
-
-        <pattern id="manga-brick" width="100" height="40" patternUnits="userSpaceOnUse">
-          <path d="M0 20 L100 20 M50 20 L50 40 M0 0 L0 20 M100 0 L100 20" stroke={inkColor} strokeWidth="0.5" fill="none" opacity="0.15"/>
-        </pattern>
-
-        {/* Hyper-realistic Graphite Pencil Texture Filter */}
-        <filter id="pencil" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.1" numOctaves="5" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" result="displaced" />
-        </filter>
-      </defs>
-
       <rect x="-300" y="-100" width="1600" height="800" fill={paperColor} />
 
-      {/* Main Container with Pencil Filter */}
-      <g filter="url(#pencil)">
-        <TexturedArchitecture 
-          inkColor={inkColor} 
-          windowHovered={windowHovered} 
-          setWindowHovered={setWindowHovered} 
-          playGlassChime={playGlassChime} 
-        />
+      <g>
+        {/* Layer 1: Base Environment (Brick wall, cat, path, flower box) */}
+        <image href="/images/base_layer.png" x="-300" y="-100" width="1600" height="800" preserveAspectRatio="xMidYMid slice" opacity="0.9" />
 
-        <TexturedTree 
-          inkColor={inkColor} 
-          shadowColor={shadowColor} 
-        />
-
+        {/* Layer 2: Interactive Door & Window */}
         <TexturedInteractiveDoor 
           inkColor={inkColor} 
           doorHovered={doorHovered} 
           setDoorHovered={setDoorHovered} 
           playKnock={playKnock} 
         />
-      </g>
 
+        {/* Right Window */}
+        <g 
+          transform="translate(680, 260)"
+          onMouseEnter={() => { setWindowHovered(true); playGlassChime(); }}
+          onMouseLeave={() => setWindowHovered(false)}
+          style={{ cursor: 'pointer' }}
+        >
+          <rect x="0" y="0" width="180" height="160" fill="#f5f0e6" stroke={inkColor} strokeWidth="1.5" />
+          <motion.rect 
+            x="5" y="5" width="170" height="150" 
+            animate={{ fill: windowHovered ? '#e8ecef' : 'rgba(0,0,0,0.02)' }}
+            transition={{ duration: 0.5 }}
+          />
+          <motion.g
+            initial={{ opacity: 0 }}
+            animate={{ opacity: windowHovered ? 1 : 0, y: windowHovered ? 0 : 10 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            style={{ pointerEvents: 'none' }}
+          >
+            <path d="M60 150 C 60 90, 120 90, 120 150 Z" fill={inkColor} opacity="0.8" />
+            <circle cx="90" cy="75" r="20" fill={inkColor} opacity="0.8" />
+          </motion.g>
+          <path d="M90 5 L90 155 M5 80 L175 80" stroke={inkColor} strokeWidth="1.5" />
+          <path d="M0 160 L-10 170 M180 160 L190 165" stroke={inkColor} strokeWidth="0.6" />
+        </g>
+
+        {/* Layer 3: Transparent Stylized Tree on the Left */}
+        <image href="/images/tree_layer.png" x="-250" y="50" width="500" height="600" preserveAspectRatio="xMidYMid meet" opacity="0.95" />
+
+        {/* Layer 4: Interactive Hanging Mouse */}
+        <motion.g whileHover={{ rotate: [0, 8, -6, 3, 0] }} transition={{ duration: 2, ease: "easeInOut" }} style={{ transformOrigin: "180px 250px", cursor: "pointer" }}>
+          <path d="M180 250 C 190 320, 180 380, 190 450" fill="none" stroke={inkColor} strokeWidth="1" />
+          <rect x="170" y="450" width="40" height="60" rx="20" fill="#ffffff" stroke={inkColor} strokeWidth="1" />
+          <path d="M190 450 L190 475" stroke={inkColor} strokeWidth="1" />
+        </motion.g>
+      </g>
     </motion.svg>
   );
 };

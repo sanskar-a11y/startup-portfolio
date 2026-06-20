@@ -164,7 +164,7 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
                   textTransform: 'uppercase'
                 }}
               >
-                TOMASZ SZMAJDA
+                PORTFOLIO
               </motion.p>
               <motion.p 
                 style={{
