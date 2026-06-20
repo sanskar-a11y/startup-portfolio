@@ -127,9 +127,8 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '100%',
-                maxWidth: '1200px',
-                aspectRatio: '1000/600',
+                width: '100vw',
+                height: '65vh',
                 zIndex: 1,
                 cursor: 'pointer'
               }}
@@ -144,13 +143,20 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
             {/* Elegant Typography */}
             <motion.div
               style={{
-                marginTop: '3rem',
-                zIndex: 1,
+                marginTop: '1.5rem',
+                zIndex: 10,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '0.5rem',
-                pointerEvents: 'none'
+                pointerEvents: 'none',
+                // Contrast & Legibility Adjustments
+                backgroundColor: 'rgba(250, 247, 242, 0.85)',
+                backdropFilter: 'blur(6px)',
+                WebkitBackdropFilter: 'blur(6px)',
+                padding: '1.25rem 2.5rem',
+                borderRadius: '16px',
+                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.08)'
               }}
             >
               <motion.p 
