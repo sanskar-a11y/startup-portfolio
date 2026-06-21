@@ -1,23 +1,20 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from "framer-motion";
+
+import { soundEngine } from '@/lib/SoundEngine';
 
 export const TexturedInteractiveDoor = ({ 
   inkColor, 
-  doorHovered,
-  setDoorHovered,
-  playKnock,
   isMobile 
 }: { 
   inkColor: string;
-  doorHovered: boolean;
-  setDoorHovered: (v: boolean) => void;
-  playKnock: () => void;
   isMobile?: boolean;
 }) => {
+  const [doorHovered, setDoorHovered] = useState(false);
   return (
     <>
-      <g transform={isMobile ? "translate(140, 50) scale(2.2)" : "translate(400, 50) scale(2.2)"} filter="url(#soft-shadow)">
+      <g transform={isMobile ? "translate(140, 50) scale(2.2)" : "translate(400, 50) scale(2.2)"}>
         {/* Sign Group */}
         <g transform="translate(128, -60)">
         {/* Left Chain Links */}
@@ -36,26 +33,44 @@ export const TexturedInteractiveDoor = ({
         <path d="M-100 12 L-95 12 M-90 8 L-85 8 M-60 14 L-50 14 M30 12 L40 12 M80 16 L90 16" stroke={inkColor} strokeWidth="0.4" opacity="0.5" />
 
         <text x="0" y="35" fontFamily="'Inter', sans-serif" fontSize="28" fontWeight="bold" textAnchor="middle" fill={inkColor} letterSpacing="4">PORTFOLIO</text>
-      </g>
         </g>
 
         <g 
-          onMouseEnter={() => { setDoorHovered(true); playKnock(); }}
-          onMouseLeave={() => setDoorHovered(false)}
-          style={{ cursor: 'pointer' }}
+          onPointerEnter={(e) => {
+            if (e.pointerType === 'mouse') {
+              setDoorHovered(true);
+              soundEngine.init();
+              soundEngine.playKnock();
+            }
+          }}
+          onPointerLeave={(e) => {
+            if (e.pointerType === 'mouse') {
+              setDoorHovered(false);
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              soundEngine.init();
+              soundEngine.playKnock();
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label="Knock on door"
+          style={{ cursor: 'pointer', outline: 'none' }}
         >
           {/* Solid background to block bricks */}
           <rect x="0" y="0" width="160" height="310" fill="#fdfbf7" />
-        <motion.rect 
-          x="0" y="0" width="160" height="310" 
-          fill="url(#door-watercolor)" 
-          stroke={inkColor} strokeWidth="1.5"
-          animate={{ scale: doorHovered ? 1.02 : 1 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-        />
-        
-        {/* Watercolor texture overly */}
-        <rect x="0" y="0" width="160" height="310" fill="url(#door-sketch)" style={{ mixBlendMode: 'multiply' }} />
+          
+          <motion.rect 
+            x="0" y="0" width="160" height="310" 
+            fill="transparent" 
+            stroke={inkColor} strokeWidth="1.5"
+            style={{ transformOrigin: "center" }}
+            animate={{ scale: doorHovered ? 1.02 : 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          />
 
         {/* --- DOOR DETAILS START --- */}
         
@@ -142,6 +157,7 @@ export const TexturedInteractiveDoor = ({
 
         {/* --- DOOR DETAILS END --- */}
       </g>
-    </>
+    </g>
+  </>
   );
 };

@@ -9,17 +9,29 @@ export function useWindowSize() {
   useEffect(() => {
     // only execute all the code below in client side
     if (typeof window !== 'undefined') {
+      let timeoutId: NodeJS.Timeout;
       const handleResize = () => {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight,
+          });
+        }, 150);
       }
     
       window.addEventListener("resize", handleResize);
-      handleResize();
+      
+      // Call once immediately to set initial size without delay
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
     
-      return () => window.removeEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        clearTimeout(timeoutId);
+      };
     }
   }, []);
 

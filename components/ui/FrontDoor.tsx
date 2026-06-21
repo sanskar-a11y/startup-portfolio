@@ -1,72 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUIStore } from '../../store/uiStore';
 import { PortfolioSketchScene } from './MinimalProps';
+import { soundEngine } from '../../lib/SoundEngine';
 
 export function FrontDoor({ children }: { children: React.ReactNode }) {
   const [isEntered, setIsEntered] = useState(false);
+  const [isEntering, setIsEntering] = useState(false);
+  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
   const setHasEntered = useUIStore(state => state.setHasEntered);
 
   const fadeInWhite = useUIStore(state => state.fadeInWhite);
   const fadeOutWhite = useUIStore(state => state.fadeOutWhite);
 
-  const playFlashSound = () => {
-    try {
-      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioContext) return;
-      const ctx = new AudioContext();
-      const t = ctx.currentTime;
-      
-      const bufferSize = ctx.sampleRate * 2;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        data[i] = Math.random() * 2 - 1;
-      }
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-      
-      const noiseFilter = ctx.createBiquadFilter();
-      noiseFilter.type = 'lowpass';
-      noiseFilter.frequency.setValueAtTime(2000, t);
-      noiseFilter.frequency.exponentialRampToValueAtTime(100, t + 1.5);
-      
-      const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0, t);
-      noiseGain.gain.linearRampToValueAtTime(1, t + 0.05);
-      noiseGain.gain.exponentialRampToValueAtTime(0.01, t + 1.5);
-      
-      noise.connect(noiseFilter);
-      noiseFilter.connect(noiseGain);
-      noiseGain.connect(ctx.destination);
-      
-      const osc = ctx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(200, t);
-      osc.frequency.exponentialRampToValueAtTime(40, t + 1);
-      
-      const oscGain = ctx.createGain();
-      oscGain.gain.setValueAtTime(0, t);
-      oscGain.gain.linearRampToValueAtTime(1, t + 0.05);
-      oscGain.gain.exponentialRampToValueAtTime(0.01, t + 1.5);
-      
-      osc.connect(oscGain);
-      oscGain.connect(ctx.destination);
-      
-      noise.start(t);
-      noise.stop(t + 2);
-      osc.start(t);
-      osc.stop(t + 2);
-    } catch (e) {
-      console.error("Audio playback failed", e);
-    }
-  };
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach(clearTimeout);
+    };
+  }, []);
 
   const handleClick = () => {
-    playFlashSound();
+    if (isEntering) return;
+    setIsEntering(true);
+    
+    soundEngine.init();
+    soundEngine.playFlashSound();
     fadeInWhite();
     
-    setTimeout(() => {
+    const t1 = setTimeout(() => {
       setIsEntered(true);
       setHasEntered(true);
       
@@ -74,10 +35,13 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
         document.dispatchEvent(new CustomEvent('preloaderComplete'));
       }
       
-      setTimeout(() => {
+      const t2 = setTimeout(() => {
         fadeOutWhite();
       }, 300);
+      timeoutRefs.current.push(t2);
     }, 200);
+    
+    timeoutRefs.current.push(t1);
   };
 
   return (
@@ -113,8 +77,8 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '100vw',
-                height: '100vh',
+                width: '100%',
+                height: '100dvh',
                 background: 'radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, rgba(250,247,242,0) 70%)',
                 zIndex: 0,
                 pointerEvents: 'none'
@@ -127,8 +91,8 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '100vw',
-                height: '65vh',
+                width: '100%',
+                height: '65dvh',
                 zIndex: 1,
                 cursor: 'pointer'
               }}
@@ -136,6 +100,15 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: "easeOut" }}
               onClick={handleClick}
+              tabIndex={0}
+              role="button"
+              aria-label="Enter Portfolio"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleClick();
+                }
+              }}
             >
               <PortfolioSketchScene />
             </motion.div>
