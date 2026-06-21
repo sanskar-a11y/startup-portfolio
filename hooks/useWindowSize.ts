@@ -9,7 +9,7 @@ export function useWindowSize() {
   useEffect(() => {
     // only execute all the code below in client side
     if (typeof window !== 'undefined') {
-      let timeoutId: NodeJS.Timeout;
+      let timeoutId: ReturnType<typeof setTimeout>;
       const handleResize = () => {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {

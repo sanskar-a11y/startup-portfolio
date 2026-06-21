@@ -3,7 +3,6 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const nextConfig: NextConfig = {
   output: 'export',
-  distDir: 'dist',
   images: {
     unoptimized: true,
   },

@@ -15,6 +15,7 @@ export function Overlay() {
     if (overlayRef.current) {
       gsap.to(overlayRef.current, {
         opacity: overlayVisible ? 1 : 0,
+        pointerEvents: overlayVisible ? 'auto' : 'none',
         duration: 0.3,
         ease: 'power2.inOut',
         overwrite: true
@@ -26,6 +27,7 @@ export function Overlay() {
     if (whiteOverlayRef.current) {
       gsap.to(whiteOverlayRef.current, {
         opacity: whiteOverlayVisible ? 1 : 0,
+        pointerEvents: whiteOverlayVisible ? 'auto' : 'none',
         duration: 0.8,
         ease: 'power2.inOut',
         overwrite: true
@@ -40,9 +42,9 @@ export function Overlay() {
         style={{
           position: 'fixed',
           top: 0,
+          right: 0,
+          bottom: 0,
           left: 0,
-          width: '100%',
-          height: '100dvh',
           backgroundColor: '#1a1a1a',
           opacity: 0,
           zIndex: 9999,
@@ -55,9 +57,9 @@ export function Overlay() {
         style={{
           position: 'fixed',
           top: 0,
+          right: 0,
+          bottom: 0,
           left: 0,
-          width: '100%',
-          height: '100dvh',
           backgroundColor: '#ffffff',
           opacity: 0,
           zIndex: 10000,

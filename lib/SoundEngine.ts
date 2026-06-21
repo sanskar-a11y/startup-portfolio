@@ -88,13 +88,13 @@ class SoundEngine {
     }, 1500);
   }
 
-  public playFlashSound() {
+  public async playFlashSound() {
     const ctx = this.getContext();
     if (!ctx) return;
     
     // We must ensure context is resumed here because this is an explicit click action.
     if (ctx.state === 'suspended') {
-      ctx.resume().catch(console.error);
+      await ctx.resume().catch(console.error);
     }
     
     if (this.isFlashing) return;

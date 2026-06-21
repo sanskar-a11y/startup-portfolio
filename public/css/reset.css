@@ -389,3 +389,15 @@ table {
     font-size: 14px;
   }
 }
+
+/* --------------------------------------------------------------------------
+   § 19  VISIBILITY UTILITIES
+   -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .desktop-only { display: none !important; }
+  .mobile-only { display: block !important; }
+}
+@media (min-width: 768px) {
+  .desktop-only { display: block !important; }
+  .mobile-only { display: none !important; }
+}

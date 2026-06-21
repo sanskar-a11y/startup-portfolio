@@ -48,9 +48,17 @@ export const TexturedInteractiveDoor = ({
               setDoorHovered(false);
             }
           }}
+          onFocus={() => setDoorHovered(true)}
+          onBlur={() => setDoorHovered(false)}
+          onClick={(e) => {
+            e.stopPropagation();
+            soundEngine.init();
+            soundEngine.playKnock();
+          }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
+              e.stopPropagation();
               soundEngine.init();
               soundEngine.playKnock();
             }

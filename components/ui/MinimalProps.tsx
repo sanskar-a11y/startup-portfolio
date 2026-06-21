@@ -6,14 +6,7 @@ import { TexturedInteractiveDoor } from './TexturedInteractiveDoor';
 import { TexturedWindow } from './TexturedWindow';
 import { useWindowSize } from '@/hooks/useWindowSize';
 
-export const PortfolioSketchScene = ({ className }: { className?: string }) => {
-  const [sceneHovered, setSceneHovered] = useState(false);
-  const { width } = useWindowSize();
-  
-  // Prevent hydration layout shift by waiting for client-side width
-  if (width === undefined) return null;
-
-  const isMobile = width < 768;
+const SketchSVG = ({ isMobile, className, sceneHovered, setSceneHovered }: any) => {
   const inkColor = "#1a1a1a";
   const paperColor = "#fdfbf7";
 
@@ -35,21 +28,21 @@ export const PortfolioSketchScene = ({ className }: { className?: string }) => {
       <title>Interactive sketched architecture with an entryway</title>
       
       <defs>
-        <pattern id="wall-pattern" patternUnits="userSpaceOnUse" width="800" height="800">
+        <pattern id={`wall-pattern-${isMobile ? 'm' : 'd'}`} patternUnits="userSpaceOnUse" width="800" height="800">
           <image href="/images/wall_bg.png" width="800" height="800" preserveAspectRatio="none" role="presentation" aria-hidden="true" />
         </pattern>
-        <pattern id="ground-pattern" patternUnits="userSpaceOnUse" width="800" height="800" patternTransform="translate(0, 150)">
+        <pattern id={`ground-pattern-${isMobile ? 'm' : 'd'}`} patternUnits="userSpaceOnUse" width="800" height="800" patternTransform="translate(0, 150)">
           <image href="/images/ground_bg.png" width="800" height="800" preserveAspectRatio="none" role="presentation" aria-hidden="true" />
         </pattern>
-        <clipPath id="window-clip">
+        <clipPath id={`window-clip-${isMobile ? 'm' : 'd'}`}>
           <rect x="5" y="5" width="170" height="150" />
         </clipPath>
       </defs>
 
-      {/* Static Backgrounds (No layout thrashing) */}
+      {/* Static Backgrounds */}
       <rect x="-1500" y="-1000" width="4000" height="3000" fill={paperColor} />
-      <rect x="-1500" y="-1000" width="4000" height="5000" fill="url(#wall-pattern)" opacity="0.8" />
-      <rect x="-1500" y="550" width="4000" height="800" fill="url(#ground-pattern)" opacity="0.9" />
+      <rect x="-1500" y="-1000" width="4000" height="5000" fill={`url(#wall-pattern-${isMobile ? 'm' : 'd'})`} opacity="0.8" />
+      <rect x="-1500" y="550" width="4000" height="800" fill={`url(#ground-pattern-${isMobile ? 'm' : 'd'})`} opacity="0.9" />
       <rect x="-1500" y="1350" width="4000" height="3000" fill="#f0ece6" opacity="0.85" />
 
       {/* Animated Scene Elements */}
@@ -81,5 +74,26 @@ export const PortfolioSketchScene = ({ className }: { className?: string }) => {
         </motion.g>
       </motion.g>
     </svg>
+  );
+};
+
+export const PortfolioSketchScene = ({ className = "" }: { className?: string }) => {
+  const [sceneHovered, setSceneHovered] = useState(false);
+  
+  return (
+    <>
+      <SketchSVG 
+        isMobile={true} 
+        className={`${className} mobile-only`} 
+        sceneHovered={sceneHovered} 
+        setSceneHovered={setSceneHovered} 
+      />
+      <SketchSVG 
+        isMobile={false} 
+        className={`${className} desktop-only`} 
+        sceneHovered={sceneHovered} 
+        setSceneHovered={setSceneHovered} 
+      />
+    </>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUIStore } from '../../store/uiStore';
 import { PortfolioSketchScene } from './MinimalProps';
-import { soundEngine } from '../../lib/SoundEngine';
+import { soundEngine } from '@/lib/SoundEngine';
 
 export function FrontDoor({ children }: { children: React.ReactNode }) {
   const [isEntered, setIsEntered] = useState(false);
@@ -37,8 +37,10 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
       
       const t2 = setTimeout(() => {
         fadeOutWhite();
+        timeoutRefs.current = timeoutRefs.current.filter(t => t !== t2);
       }, 300);
       timeoutRefs.current.push(t2);
+      timeoutRefs.current = timeoutRefs.current.filter(t => t !== t1);
     }, 200);
     
     timeoutRefs.current.push(t1);
@@ -161,7 +163,10 @@ export function FrontDoor({ children }: { children: React.ReactNode }) {
           </motion.div>
         )}
       </AnimatePresence>
-      {children}
+      {/* inert prevents tabbing into the hidden content before the door is clicked */}
+      <div inert={!isEntered ? true : undefined} style={{ display: 'contents' }}>
+        {children}
+      </div>
     </>
   );
 }

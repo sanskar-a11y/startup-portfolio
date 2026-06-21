@@ -10,15 +10,23 @@ export const TexturedWindow = ({ isMobile, inkColor }: { isMobile: boolean, inkC
   return (
     <g 
       transform={isMobile ? "translate(140, 950) scale(2.2)" : "translate(850, 100) scale(2.2)"}
-      onMouseEnter={() => setWindowHovered(true)}
-      onMouseLeave={() => setWindowHovered(false)}
-      onClick={() => {
+      onPointerEnter={(e) => {
+        if (e.pointerType === 'mouse') setWindowHovered(true);
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType === 'mouse') setWindowHovered(false);
+      }}
+      onFocus={() => setWindowHovered(true)}
+      onBlur={() => setWindowHovered(false)}
+      onClick={(e) => {
+        e.stopPropagation();
         soundEngine.init();
         soundEngine.playGlassChime();
       }}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
+          e.stopPropagation();
           soundEngine.init();
           soundEngine.playGlassChime();
         }
